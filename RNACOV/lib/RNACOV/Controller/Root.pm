@@ -27,10 +27,8 @@ The root page (/)
 =cut
 
 sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-    # Hello World
-    $c->response->body( $c->welcome_message );
+  my ( $self, $c ) = @_;
+  return;
 }
 
 =head2 default
