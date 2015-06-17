@@ -4,7 +4,7 @@
     <form enctype="multipart/form-data" method="post" action="/results">
       <div class="form-group">
         <label for="stofile">Upload an alignment in stockholm format</label>
-        <input type="file" id="stofile">
+        <input type="file" id="stofile" name="stofile">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
