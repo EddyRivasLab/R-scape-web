@@ -6,11 +6,27 @@
   background: #444;
 }
 
-.covary td:first-child {
+.covary td:first-child, .key span.covary {
   background: #d7efc5;
 }
 
-.compat td:first-child {
+.compat td:first-child, .key span.compat {
   background: orange;
 }
 
+.key span {
+  background: #444;
+  padding-top: 0.3em;
+}
+
+
+.key {
+  list-style: none;
+}
+
+.key li span {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+}

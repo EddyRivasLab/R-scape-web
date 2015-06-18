@@ -2,6 +2,11 @@
 
 <div class="row">
   <div class="col-md-5">
+    <ul class="key">
+      <li><span class="covary">*</span> A covarying base pair</li>
+      <li><span class="compat">~</span> A covarying pair compatible with the secondary structure</li>
+      <li><span>&nbsp;</span> A covarying pair not compatible with the secondary structure</li>
+    </ul>
     <table class="outresults table">
       <thead>
         <tr>
