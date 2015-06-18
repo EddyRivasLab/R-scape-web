@@ -83,7 +83,6 @@ sub read_results : Private {
 
   while (<$output>) {
     next if $_ =~ /^#/;
-    warn $_;
     my @line = split /\t/, $_;
     push @{$c->stash->{out_file}}, \@line;
   }
