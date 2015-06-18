@@ -21,6 +21,8 @@ use Catalyst qw/
     Static::Simple
 /;
 
+use CatalystX::RoleApplicator;
+
 extends 'Catalyst';
 
 our $VERSION = '0.01';
@@ -39,7 +41,12 @@ __PACKAGE__->config(
     # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
     enable_catalyst_header => 1, # Send X-Catalyst header
+    using_frontend_proxy => 1,
 );
+
+__PACKAGE__->apply_request_class_roles(qw/
+  Catalyst::TraitFor::Request::ProxyBase
+/);
 
 # Start the application
 __PACKAGE__->setup();

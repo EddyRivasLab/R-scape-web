@@ -2,11 +2,6 @@
 
 <div class="row">
   <div class="col-md-5">
-    <ul class="key">
-      <li><span class="covary">*</span> A covarying base pair</li>
-      <li><span class="compat">~</span> A covarying pair compatible with the secondary structure</li>
-      <li><span>&nbsp;</span> A covarying pair not compatible with the secondary structure</li>
-    </ul>
     <table class="outresults table">
       <thead>
         <tr>
@@ -35,6 +30,14 @@
         [% END %]
       </tbody>
     </table>
+    <ul class="key">
+      <li><span class="covary">*</span> A covarying base pair</li>
+      <li><span class="compat">~</span> A covarying pair compatible with the secondary structure</li>
+      <li><span>&nbsp;</span> A covarying pair not compatible with the secondary structure</li>
+    </ul>
+    <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]">
+      <button class="btn btn-default">Download</button>
+    </form>
   </div>
   <div class="col-md-7">
     <h3>R2R image</h3>

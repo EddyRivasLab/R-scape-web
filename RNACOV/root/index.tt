@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <h2>Perform a search</h2>
-    <form enctype="multipart/form-data" method="post" action="/results">
+    <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
       <div class="form-group">
         <label for="stofile">Upload an alignment in stockholm format</label>
         <input type="file" id="stofile" name="stofile">
