@@ -9,3 +9,20 @@
   border: 1px solid #ccc;
   padding: 0.3em;
 }
+.outresults th {
+  padding: 0.3em;
+  border: 1px solid #ccc;
+}
+
+.outresults td:first-child {
+  background: #444;
+}
+
+.covary td:first-child {
+  background: #d7efc5;
+}
+
+.compat td:first-child {
+  background: orange;
+}
+

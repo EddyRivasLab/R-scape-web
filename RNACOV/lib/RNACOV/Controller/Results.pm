@@ -85,8 +85,7 @@ sub read_results : Private {
     next if $_ =~ /^#/;
     warn $_;
     my @line = split /\t/, $_;
-    use DDP; p @line;
-    push @{$c->stash->{out_file}}, [$line[0], $line[1], $line[2]];
+    push @{$c->stash->{out_file}}, \@line;
   }
 
   return;
