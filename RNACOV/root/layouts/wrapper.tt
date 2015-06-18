@@ -38,7 +38,7 @@
       </div><!-- /.container-fluid -->
     </nav>
     
-    <div id="content" class="container">
+    <div id="content" class="container-fluid">
       [%- content -%]
     </div>
 

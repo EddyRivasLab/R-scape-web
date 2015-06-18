@@ -1,8 +1,8 @@
 <h2>Results</h2>
 
 <div class="row">
-  <div class="col-sm-12">
-    <table class="outresults">
+  <div class="col-md-5">
+    <table class="outresults table">
       <thead>
         <tr>
           <th>Symbol</th>
@@ -31,15 +31,9 @@
       </tbody>
     </table>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-12">
+  <div class="col-md-7">
     <h3>R2R image</h3>
     <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r.svg">
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-12">
     <h3>Dot plot</h3>
     <img id="dplotimage" src="[% c.stash.tmp_id %]/dplot/query.svg">
   </div>
