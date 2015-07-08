@@ -37,8 +37,8 @@ sub tabed_results :Path :Args(1) {
 
   $c->forward('read_results', [$results_dir]);
 
-  $c->res->header('Content-Disposition' => "attachment; filename=results.csv");
-  $c->res->content_type('text/csv');
+  $c->res->header('Content-Disposition' => "attachment; filename=results.txt");
+  $c->res->content_type('text/plain');
   $c->response->body($c->stash->{out});
   return;
 }
