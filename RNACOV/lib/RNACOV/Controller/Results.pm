@@ -68,7 +68,10 @@ sub process : Private {
   my ($self, $c) = @_;
   my $tmp_id = undef;
   eval {
-    $tmp_id = $c->model('RNACOV')->run($c->req->upload('stofile'));
+    $tmp_id = $c->model('RNACOV')->run({
+      upload => $c->req->upload('stofile'),
+      evalue => $c->req->param('evalue'),
+    });
   };
   if ($tmp_id) {
     $c->response->redirect($c->uri_for('/results/' . $tmp_id));

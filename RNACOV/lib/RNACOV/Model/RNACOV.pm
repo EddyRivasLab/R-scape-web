@@ -28,17 +28,28 @@ has 'r2rdir' => (
 );
 
 sub run {
-  my ($self, $upload) = @_;
+  my ($self, $opts) = @_;
   mkdir($self->dir_path);
   my $tmp_dir = tempdir( 'XXXXXXXXX', DIR => $self->dir_path );
   my $upload_file_path =  $tmp_dir . '/query';
 
   # save the uploaded file for later use.
-  copy($upload->tempname, $upload_file_path);
+  copy($opts->{upload}->tempname, $upload_file_path);
 
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
-  $cmd .= 'export R2RDIR=' . $self->r2rdir . '; ';
-  $cmd .= $self->exec_path . ' --outdir ' . $tmp_dir . ' ' . $upload_file_path;
+  $cmd .= 'export R2RDIR=' . $self->r2rdir . '; ' . $self->exec_path;
+
+
+  if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
+    $cmd .= ' -E ' . $opts->{evalue};
+  }
+
+
+  $cmd .= ' --outdir ' . $tmp_dir . ' ' . $upload_file_path;
+
+  if ($ENV{'CATALYST_DEBUG'}) {
+    warn "$cmd\n";
+  }
 
   system($cmd);
 
