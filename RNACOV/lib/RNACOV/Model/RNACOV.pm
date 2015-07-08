@@ -29,6 +29,7 @@ has 'r2rdir' => (
 
 sub run {
   my ($self, $upload) = @_;
+  mkdir($self->dir_path);
   my $tmp_dir = tempdir( 'XXXXXXXXX', DIR => $self->dir_path );
   my $upload_file_path =  $tmp_dir . '/query';
 
