@@ -90,6 +90,16 @@ sub read_results : Private {
     push @{$c->stash->{out_file}}, \@line;
   }
 
+  if (!exists $c->stash->{out_file}) {
+    $c->go('no_results');
+  }
+
+  return;
+}
+
+sub no_results : Private {
+  my ($self, $c) = @_;
+  $c->stash->{template} = 'no_results.tt';
   return;
 }
 
