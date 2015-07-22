@@ -49,20 +49,24 @@ sub r2r_image : Path : Args(2) {
   my ($self, $c, $dir) = @_;
   my $results_dir = $c->config->{'Model::RNACOV'}->{dir_path} . '/' . $dir;
   $c->res->content_type('image/svg+xml');
-  my $contents = read_file($results_dir . '/query.R2R.sto.svg');
+  my $contents = read_file($results_dir . '/query_1.R2R.sto.svg');
   $c->res->body($contents);
   return;
 }
 
 sub dot_plot : Path : Args(3) {
-  my ($self, $c, $dir) = @_;
+  my ($self, $c, $dir, $type) = @_;
   my $results_dir = $c->config->{'Model::RNACOV'}->{dir_path} . '/' . $dir;
   $c->res->content_type('image/svg+xml');
-  my $contents = read_file($results_dir . '/query.dplot.svg');
+  my $contents = read_file($results_dir . '/query_1.dplot.svg');
+
+  if ($type eq "his") {
+    $contents = read_file($results_dir . '/query_1.his.svg');
+  }
+
   $c->res->body($contents);
   return;
 }
-
 
 sub process : Private {
   my ($self, $c) = @_;

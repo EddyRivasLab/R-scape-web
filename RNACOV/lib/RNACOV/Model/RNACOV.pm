@@ -27,6 +27,11 @@ has 'r2rdir' => (
   is => 'ro',
 );
 
+has 'fasttree' => (
+  isa => 'Str',
+  is => 'ro',
+);
+
 sub run {
   my ($self, $opts) = @_;
   mkdir($self->dir_path);
@@ -37,7 +42,9 @@ sub run {
   copy($opts->{upload}->tempname, $upload_file_path);
 
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
-  $cmd .= 'export R2RDIR=' . $self->r2rdir . '; ' . $self->exec_path;
+  $cmd .= 'export R2RDIR=' . $self->r2rdir . '; ';
+  $cmd .= 'export FASTTREEDIR='. $self->fasttree . '; ';
+  $cmd .= $self->exec_path . ' 2>&1 >> /tmp/rnacov/output';
 
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
