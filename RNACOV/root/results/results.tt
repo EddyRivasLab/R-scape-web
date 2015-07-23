@@ -44,7 +44,7 @@
     <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r.svg">
     <h3>Dot plot</h3>
     <img id="dplotimage" src="[% c.stash.tmp_id %]/dplot/query.svg">
-    <h3>HIS plot</h3>
+    <h3>Distribution of Scores</h3>
     <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
   </div>
 </div>
