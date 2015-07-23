@@ -22,6 +22,11 @@ has 'gnuplot' => (
   is => 'ro',
 );
 
+has 'gnuplot_ps' => (
+  isa => 'Str',
+  is => 'ro',
+);
+
 has 'r2rdir' => (
   isa => 'Str',
   is => 'ro',
@@ -42,9 +47,10 @@ sub run {
   copy($opts->{upload}->tempname, $upload_file_path);
 
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
+  $cmd .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
   $cmd .= 'export R2RDIR=' . $self->r2rdir . '; ';
   $cmd .= 'export FASTTREEDIR='. $self->fasttree . '; ';
-  $cmd .= $self->exec_path . ' 2>&1 >> /tmp/rnacov/output';
+  $cmd .= $self->exec_path . ' 2>&1 >> /dev/null';
 
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
