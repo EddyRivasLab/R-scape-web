@@ -1,6 +1,28 @@
 <div class="row">
   <div class="col-sm-12">
-    <h2>Perform a search</h2>
+    <h2>RNACOV</h2>
+    <p class="lead">A method to find significantly covarying pairs of positions in an RNA alignment.</p>
+
+
+    <div class="well">
+      <p>The input is an RNA alignment <a href="https://en.wikipedia.org/wiki/Stockholm_format">in Stockholm format</a> with an annotated
+    secondary structure (the structure can include pseudoknots). The
+    output is a list of the significantly covarying pairs (basepaired or
+    not) for a target E-value.</p>
+
+      <p>If the input alignment does not have an annotated 2D structure, RNACOV
+    calculates the structure with the highest amount of covariation for
+    the target E-value (using constrained CYK folding with the
+    probabilistic TORNADO "basic_grammar" model).</p>
+
+      <p>For more information, run RNACOV on the following <a href="http://rfam.xfam.org/family/RF00165/alignment?acc=RF00165&format=stockholm&download=1">example (the Rfam12.0
+        seed alignment for the Purine riboswitch, RF00165)</a></p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Perform a search</h3>
     <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
       <div class="form-group">
         <label for="stofile">Upload an alignment in stockholm format</label>

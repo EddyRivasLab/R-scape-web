@@ -30,6 +30,14 @@
         [% END %]
       </tbody>
     </table>
+    <p>Significantly covarying pairs present in the given structure are
+    marked green. Other significantly covarying pairs are marked orange if
+    compatible with the given structure or black if they are not. Orange
+    covarying pairs could be an indication of an under annotated
+    structure. Black covarying pairs could indicate that the given
+    structure is wrong and covariation supports an alternative structure,
+    covarying tertiary interactions, or a false positive.
+    </p>
     <ul class="key">
       <li><span class="covary">*</span> A covarying base pair</li>
       <li><span class="compat">~</span> A covarying pair compatible with the secondary structure</li>
