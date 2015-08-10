@@ -15,8 +15,8 @@
     the target E-value (using constrained CYK folding with the
     probabilistic TORNADO "basic_grammar" model).</p>
 
-      <p>For more information, run RNACOV on the following <a href="http://rfam.xfam.org/family/RF00165/alignment?acc=RF00165&format=stockholm&download=1">example (the Rfam12.0
-        seed alignment for the Purine riboswitch, RF00165)</a></p>
+      <p>For more information, run RNACOV on the following <a href="http://rfam.xfam.org/family/RF00167/alignment?acc=RF00167&format=stockholm&download=1">example (the Rfam12.0
+        seed alignment for the Purine Riboswitch, RF00167)</a></p>
     </div>
   </div>
 </div>
