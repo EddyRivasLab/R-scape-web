@@ -30,7 +30,7 @@
       </div>
       <div class="form-group">
         <label for="evalue">E-value</label>
-        <input type="text" id="evalue" name="evalue" value="1.0">
+        <input type="text" id="evalue" name="evalue" value="0.05">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
