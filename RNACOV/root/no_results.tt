@@ -1,4 +1,4 @@
 <h2>Results</h2>
 
-<p>The uploaded file produced no results.</p>
-<p>Please try <a href="[% c.uri_for('/') %]">searching again</a> with a file in <a href="https://en.wikipedia.org/wiki/Stockholm_format">Stockholm format.</a></p>
+<p>No significant covariation was found with current E-value setting.</p>
+<p>Please try <a href="[% c.uri_for('/') %]">searching again</a> with a higher E-value.</p>

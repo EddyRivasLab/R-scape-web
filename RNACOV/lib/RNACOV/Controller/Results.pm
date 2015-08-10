@@ -103,6 +103,12 @@ sub process : Private {
 sub read_results : Private {
   my ($self, $c, $dir) = @_;
 
+  my $output_file = $dir . '/query.out';
+
+  if (-z $output_file) {
+    $c->go('bad_input');
+  }
+
   open my $output, '<', $dir . '/query.out';
 
   while (<$output>) {
@@ -115,6 +121,12 @@ sub read_results : Private {
     $c->go('no_results');
   }
 
+  return;
+}
+
+sub bad_input : Private {
+  my ($self, $c) = @_;
+  $c->stash->{template} = 'bad_input.tt';
   return;
 }
 
