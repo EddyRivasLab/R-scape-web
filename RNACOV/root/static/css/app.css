@@ -6,6 +6,10 @@
   background: #444;
 }
 
+.outresults th {
+  cursor: pointer;
+}
+
 .covary td:first-child, .key span.covary {
   background: #d7efc5;
 }
@@ -29,4 +33,19 @@
   width: 30px;
   display: inline-block;
   text-align: center;
+}
+
+.sorted .arrow {
+  border-top: 4px solid #000;
+}
+.arrow {
+  border-top: 4px solid #999;
+  border-left: 4px solid rgba(0, 0, 0, 0);
+  border-right: 4px solid rgba(0, 0, 0, 0);
+  width: 0;
+  height: 0;
+  vertical-align: baseline;
+  display: inline-block;
+  content: "";
+  margin-left: .2em;
 }

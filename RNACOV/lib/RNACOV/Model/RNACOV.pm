@@ -4,6 +4,7 @@ use namespace::autoclean;
 use File::Temp qw/ tempfile tempdir /;
 use File::Basename;
 use File::Copy;
+use Sereal::Encoder;
 
 extends 'Catalyst::Model';
 
@@ -41,7 +42,20 @@ sub run {
   my ($self, $opts) = @_;
   mkdir($self->dir_path);
   my $tmp_dir = tempdir( 'XXXXXXXXX', DIR => $self->dir_path );
-  my $upload_file_path =  $tmp_dir . '/query';
+
+  my $upload_name = $opts->{upload}->filename;
+
+  my $encoder = Sereal::Encoder->new();
+  my $out = $encoder->encode({
+    upload_name => $upload_name,
+    evalue => $opts->{evalue},
+  });
+
+  open my $meta, '>', $tmp_dir . '/meta';
+  print $meta $out;
+  close $meta;
+
+  my $upload_file_path =  $tmp_dir . '/' . $opts->{upload}->filename;
 
   # save the uploaded file for later use.
   copy($opts->{upload}->tempname, $upload_file_path);
@@ -58,7 +72,7 @@ sub run {
   }
 
 
-  $cmd .= ' --outdir ' . $tmp_dir . ' ' . $upload_file_path;
+  $cmd .= ' --onemsa --outdir ' . $tmp_dir . ' ' . $upload_file_path;
 
   if ($ENV{'CATALYST_DEBUG'}) {
     warn "$cmd\n";

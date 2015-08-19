@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 use File::Slurp;
 use Cwd;
+use Sereal::Decoder;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -103,13 +104,25 @@ sub process : Private {
 sub read_results : Private {
   my ($self, $c, $dir) = @_;
 
-  my $output_file = $dir . '/query.out';
+  my $decoder = Sereal::Decoder->new();
+  my $encoded_meta = read_file("$dir/meta");
+
+  my $meta = $decoder->decode($encoded_meta);
+
+  $c->stash->{evalue} = $meta->{evalue};
+
+  my $name = $meta->{upload_name};
+  $name =~ s/\.[^\.]*$//;
+
+  my $out_path = $dir . '/' . $name . '.out';
+
+  my $output_file = $out_path;
 
   if (-z $output_file) {
     $c->go('bad_input');
   }
 
-  open my $output, '<', $dir . '/query.out';
+  open my $output, '<', $out_path;
 
   while (<$output>) {
     next if $_ =~ /^#/;
