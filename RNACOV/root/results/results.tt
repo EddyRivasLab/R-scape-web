@@ -1,5 +1,6 @@
 <h2>Results</h2>
-<p>Target E-value: [% evalue %]</p>
+<p>E-value threshold: [% evalue %]</p>
+<p class="text-muted">Click on a column header to sort.</p>
 
 <div class="row">
   <div class="col-md-6">
