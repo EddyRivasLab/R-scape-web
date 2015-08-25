@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2>R-scape</h2>
+    <p class="lead">RNA Structure-driven Covariance Above Phylogenetic Expectation</p>
+
+
+    <div class="well">
+      <p>The input is an RNA alignment <a href="https://en.wikipedia.org/wiki/Stockholm_format">in Stockholm format</a> with an annotated
+    secondary structure (the structure can include pseudoknots). The
+    output is a list of the significantly covarying pairs (basepaired or
+    not) for a target E-value.</p>
+
+      <p>If the input alignment does not have an annotated 2D structure, R-scape
+    calculates the structure with the highest amount of covariation for
+    the target E-value (using constrained CYK folding with the
+    probabilistic TORNADO "basic_grammar" model).</p>
+
+      <p>For more information, run R-scape on the following <a href="http://rfam.xfam.org/family/RF00167/alignment?acc=RF00167&format=stockholm&download=1">example (the Rfam12.0
+        seed alignment for the Purine Riboswitch, RF00167)</a></p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Perform a search</h3>
+    <b>Only the first alignment in the stockholm file is analyzed. Please submit one alignment at a time.</b>
+    <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
+      <div class="form-group">
+        <label for="stofile">Upload an alignment in stockholm format.</label>
+        <input type="file" id="stofile" name="stofile">
+      </div>
+      <div class="form-group">
+        <label for="evalue">E-value</label>
+        <input type="text" id="evalue" name="evalue" value="0.05">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
