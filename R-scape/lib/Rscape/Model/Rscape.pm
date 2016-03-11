@@ -62,8 +62,8 @@ sub run {
 
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
   $cmd .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
-  $cmd .= 'export R2RDIR=' . $self->r2rdir . '; ';
-  $cmd .= 'export FASTTREEDIR='. $self->fasttree . '; ';
+  $cmd .= 'export RSCAPE_R2RDIR=' . $self->r2rdir . '; ';
+  $cmd .= 'export RSCAPE_FASTTREEDIR='. $self->fasttree . '; ';
   $cmd .= $self->exec_path . ' 2>&1 >> /dev/null';
 
 
