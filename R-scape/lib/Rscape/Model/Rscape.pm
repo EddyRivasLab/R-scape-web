@@ -13,7 +13,7 @@ has 'dir_path' => (
   is => 'ro',
 );
 
-has 'exec_path' => (
+has 'rscape_dir' => (
   isa => 'Str',
   is => 'ro',
 );
@@ -24,16 +24,6 @@ has 'gnuplot' => (
 );
 
 has 'gnuplot_ps' => (
-  isa => 'Str',
-  is => 'ro',
-);
-
-has 'r2rdir' => (
-  isa => 'Str',
-  is => 'ro',
-);
-
-has 'fasttree' => (
   isa => 'Str',
   is => 'ro',
 );
@@ -61,10 +51,9 @@ sub run {
   copy($opts->{upload}->tempname, $upload_file_path);
 
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
-  $cmd .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
-  $cmd .= 'export RSCAPE_R2RDIR=' . $self->r2rdir . '; ';
-  $cmd .= 'export RSCAPE_FASTTREEDIR='. $self->fasttree . '; ';
-  $cmd .= $self->exec_path . ' 2>&1 >> /dev/null';
+  $cmd   .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
+  $cmd   .= 'export RSCAPE_HOME='    . $self->rscape_dir . '; ';
+  $cmd   .= $self->rscape_dir . '/bin/R-scape 2>&1 >> /dev/null';
 
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
