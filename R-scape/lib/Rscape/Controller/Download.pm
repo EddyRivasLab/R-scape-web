@@ -1,6 +1,7 @@
 package Rscape::Controller::Download;
 use Moose;
 use namespace::autoclean;
+use File::Slurp;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -46,7 +47,23 @@ sub tabed_results :Path :Args(1) {
 sub read_results : Private {
   my ($self, $c, $dir) = @_;
 
-  open my $output, '<', $dir . '/query.out';
+  my $decoder = Sereal::Decoder->new();
+  my $encoded_meta = read_file("$dir/meta");
+
+  my $meta = $decoder->decode($encoded_meta);
+
+  my $name = $meta->{upload_name};
+  $name =~ s/\.[^\.]*$//;
+
+  my $out_path = $dir . '/' . $name . '.out';
+
+  my $output_file = $out_path;
+
+  if (-z $output_file) {
+    $c->go('bad_input');
+  }
+
+  open my $output, '<', $out_path;
 
   while (<$output>) {
     next if $_ =~ /^#/;
