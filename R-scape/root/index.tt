@@ -1,39 +1,62 @@
 <div class="row">
   <div class="col-sm-12">
     <h2>R-scape</h2>
-    <p class="lead">RNA Structure-driven Covariance Above Phylogenetic Expectation</p>
+    <p class="lead">RNA Structural Covariation Above Phylogenetic Expectation</p>
 
 
     <div class="well">
-      <p>The input is an RNA alignment <a href="https://en.wikipedia.org/wiki/Stockholm_format">in Stockholm format</a> with an annotated
-    secondary structure (the structure can include pseudoknots). The
-    output is a list of the significantly covarying pairs (basepaired or
-    not) for a target E-value.</p>
+    <p>
+    R-scape looks for evidence of a conserved RNA secondary structure
+    by measuring pairwise
+    covariations observed in an input multiple sequence alignment. It analyzes all possible
+    pairs, including those in your proposed structure (if you
+    provide one).
+    </p>
 
-      <p>If the input alignment does not have an annotated 2D structure, R-scape
-    calculates the structure with the highest amount of covariation for
-    the target E-value (using constrained CYK folding with the
-    probabilistic TORNADO "basic_grammar" model).</p>
+    <p> The input is an RNA multiple sequence alignment <a
+    href="https://en.wikipedia.org/wiki/Stockholm_format">in Stockholm
+    format</a>, optionally (usually) with an annotated secondary
+    structure. The structure may include pseudoknots. Only the first
+    alignment in the file is analyzed; if you submit a Stockholm file
+    containing more than one alignment, the others are ignored.  </p>
 
-      <p>For more information, run R-scape on the following <a href="http://rfam.xfam.org/family/RF00167/alignment?acc=RF00167&format=stockholm&download=1">example (the Rfam12.0
-        seed alignment for the Purine Riboswitch, RF00167)</a></p>
+    <p> The output is a list of covarying pairs that are statistically
+    significant at a given E-value. The E-value (expectation value)
+    sets a threshold for the number of false positives expected.
+    R-scape uses a null hypothesis that takes phylogenetic
+    correlations and base composition biases into account, 
+    sources of apparent pairwise covariation that are not due to
+    conserved RNA structure. </p>
+
+    <p> 
+    If the input alignment does not have an annotated secondary
+    structure, R-scape calculates the structure with the highest
+    amount of covariation for the target E-value (using constrained
+    CYK folding with the probabilistic TORNADO "basic_grammar" model).
+    </p>
+
+    <p>
+    To see an example, you can download <a href="http://rfam.xfam.org/family/RF00167/alignment?acc=RF00167&format=stockholm&download=1">the Rfam12.0
+    seed alignment for the Purine Riboswitch, RF00167</a> or any other Rfam RNA alignment, and upload that file to R-scape.
+    </p>
+
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-sm-12">
-    <h3>Perform a search</h3>
-    <b>Only the first alignment in the stockholm file is analyzed. Please submit one alignment at a time.</b>
+    <h3>Analyze an RNA alignment for structure conservation</h3>
+    <p> 
     <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
       <div class="form-group">
-        <label for="stofile">Upload an alignment in stockholm format.</label>
+        <label for="stofile">Choose a Stockholm alignment file to upload:</label>
         <input type="file" id="stofile" name="stofile">
       </div>
       <div class="form-group">
         <label for="evalue">E-value</label>
-        <input type="text" id="evalue" name="evalue" value="0.05">
+        <input type="text" id="evalue" name="evalue" value="1.0">
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Upload and run R-scape analysis</button>
     </form>
   </div>
 </div>
