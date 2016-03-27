@@ -43,10 +43,12 @@
     </div>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-sm-12">
-    <h3>Analyze an RNA alignment for structure conservation</h3>
+  <div class="col-sm-11 col-sm-offset-1">
+    <h3>Analyze an RNA alignment</h3>
     <p> 
+    Find potential base pairs with statistically significant covariation support.
     <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
       <div class="form-group">
         <label for="stofile">Choose a Stockholm alignment file to upload:</label>
@@ -58,5 +60,23 @@
       </div>
       <button type="submit" class="btn btn-primary">Upload and run R-scape analysis</button>
     </form>
+  </div>
+</div>
+
+<hr>
+<div class="row shorts">
+  <div class="col-sm-4">
+    <h3> Download </h3>
+    <p>  Current source code distribution: <a href="http://eddylab.org/software/rscape/rscape.tar.gz">rscape.tar.gz</a>
+  </div>
+
+  <div class="col-sm-4">
+     <h3> Documentation </h3>
+     <p>  R-scape manual: <a href="http://eddylab.org/software/rscape/R-scape_userguide.pdf">R-scape_userguide.pdf</a>
+  </div>
+
+  <div class="col-sm-4">
+     <h3> Publication </h3>
+     <p>  A link to the preprint describing R-scape will be added soon.</a>
   </div>
 </div>
