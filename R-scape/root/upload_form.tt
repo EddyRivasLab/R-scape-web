@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
       <div class="form-group">
-        <label for="stofile">Upload an alignment in stockholm format</label>
+        <label for="stofile">Choose a Stockholm alignment file to upload:</label>
         <input type="file" id="stofile" name="stofile">
       </div>
       <div class="form-group">

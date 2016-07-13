@@ -72,7 +72,7 @@ sub dot_plot : Path : Args(3) {
   my @files = glob '*.dplot.svg';
 
   if ($type eq "his") {
-    @files = glob '*.his.svg';
+    @files = glob '*.surv.svg';
   }
 
   my $contents = read_file("$results_dir/" . $files[0]);
