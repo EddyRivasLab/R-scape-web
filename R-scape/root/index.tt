@@ -77,8 +77,11 @@
 
   <div class="col-sm-4">
      <h3> Publication </h3>
-     <p> You can get the
-     <a href="http://eddylab.org/publications/RivasEddy16/RivasEddy16-preprint.pdf">preprint of the R-scape manuscript</a>,
+     <p> E Rivas, J Clements, and SR Eddy,
+         <a href="https://www.nature.com/nmeth/journal/v14/n1/full/nmeth.4066.html">
+        <i> Nature Methods </i> 14:45-48, 2017.</a>
+     Here is a
+     <a href="http://eddylab.org/publications/RivasEddy16/RivasEddy16-preprint.pdf">preprint of the manuscript</a>,
      and the accompanying
      <a href="http://eddylab.org/publications/RivasEddy16/RivasEddy16-supplement.tar.gz">supplementary material tarball.</a>
   </div>
