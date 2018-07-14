@@ -53,13 +53,14 @@ sub run {
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
   $cmd   .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
   $cmd   .= 'export RSCAPE_HOME='    . $self->rscape_dir . '; ';
-  $cmd   .= $self->rscape_dir . '/bin/R-scape 2>&1 >> /dev/null';
 
+  system("grep '#=GC SS_cons' $upload_file_path > /dev/null");
+  if ($? == 0) { $cmd   .= $self->rscape_dir . '/bin/R-scape -s    2>&1 >> /dev/null'; }
+  else         { $cmd   .= $self->rscape_dir . '/bin/R-scape --cyk 2>&1 >> /dev/null'; }
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
     $cmd .= ' -E ' . $opts->{evalue};
   }
-
 
   $cmd .= ' --onemsa --outdir ' . $tmp_dir . ' ' . $upload_file_path;
 
