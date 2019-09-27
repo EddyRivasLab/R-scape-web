@@ -64,37 +64,86 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-5 col-sm-offset-1">
+    <div class="col-sm-4 col-sm-offset-1">
       <div class="form-group">
         <h4>Choose a mode</h4>
         <div class="radio">
           <label>
-            <input type="radio" name="mode" id="mode1" value="mode1" checked>
+            <input type="radio" name="mode" id="mode1" value="1" checked>
             One-set test
           </label>
         </div>
         <div class="radio">
           <label>
-            <input type="radio" name="mode" id="mode2" value="mode2">
+            <input type="radio" name="mode" id="mode2" value="2">
             One-set test + report a R-scape structure
           </label>
         </div>
         <div class="radio">
           <label>
-            <input type="radio" name="mode" id="mode3" value="mode3">
+            <input type="radio" name="mode" id="mode3" value="3">
             Two-set test
           </label>
         </div>
         <div class="radio">
           <label>
-            <input type="radio" name="mode" id="mode3" value="mode3">
+            <input type="radio" name="mode" id="mode4" value="4">
             Two-set test + report a R-scape structure
           </label>
         </div>
       </div>
     </div>
     <div class="col-md-6">
-      <p>Mode descriptions</p>
+      <div class="panel panel-default mode-desc" id="mode-desc1">
+        <div class="panel-heading">One-set test</div>
+        <div class="panel-body">
+          <p>All possible pairs are analyzed equally.
+          If a consensus structure is provided, that structure is ignored in the covariation test.
+          If a consensus structure is provided, that structure is visualized with the (one-set)
+          significant covarying pairs highlighted in green.</p>
+          <h5>preferred use:</h5>
+          <p>This option is most appropriate if you&apos;re trying to determine if a conserved
+          structure exists.</p>
+        </div>
+      </div>
+      <div class="panel panel-default mode-desc" id="mode-desc2">
+        <div class="panel-heading">One-set test + report a R-scape structure</div>
+        <div class="panel-body">
+          <p>All possible pairs are analyzed equally. A structure is predicted, maximally compatible
+          with significant covarying pairs. The R-scape predicted structure is visualized with
+          significant covarying pairs highlighted in green.</p>
+          <h5>preferred use:</h5>
+          <p>This option is most appropriate for obtaining an automatic consensus structure prediction
+          based on covariation analysis.</p>
+
+        </div>
+      </div>
+      <div class="panel panel-default mode-desc" id="mode-desc3">
+        <div class="panel-heading">Two-set test</div>
+        <div class="panel-body">
+          <p>Requires that your Stockholm file has a proposed consensus structure annotation.
+          Two independent covariation tests are performed, one on the set of proposed basepairs,
+          the other on all other possible pairs. Your annotated structure is visualized with
+          significant covarying pairs highlighted in green.</p>
+          <h5>preferred use:</h5>
+          <p>This option is most appropriate for evaluating how well an independently proposed consensus
+          structure is supported by covariation analysis.</p>
+        </div>
+      </div>
+      <div class="panel panel-default mode-desc" id="mode-desc4">
+        <div class="panel-heading">Two-set test + report a R-scape structure</div>
+        <div class="panel-body">
+          <p>Requires that your Stockholm file has a proposed consensus structure annotation.
+          Two independent covariation tests are performed, one on the set of proposed basepairs,
+          the other on all other possible pairs. A new consensus structure is predicted, maximally
+          compatible with significant covarying pairs found with two-set mode. The R-scape predicted
+          structure is visualized with significant covarying pairs highlighted in green.</p>
+          <h5>preferred use:</h5>
+          <p>This option is most appropriate for using covariation analysis to try to automatically
+          improve your current consensus structure.</p>
+        </div>
+      </div>
+
     </div>
   </div>
   <div class="row">

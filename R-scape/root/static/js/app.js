@@ -51,4 +51,17 @@ $.fn.sortable = function(){
 
 $(document).ready(function () {
   $('.outresults').sortable();
+
+  // set up the rotating descriptions when selecting a mode on the home page.
+  $('.mode-desc').hide();
+  // show the selected on
+  $('#mode-desc1').show();
+  // We only want to show one at a time as they take up a lot of space.
+  $("input[name$='mode']").click(function() {
+    var mode = $(this).val();
+    // mark all descriptions as hidden
+    $('.mode-desc').hide();
+    // show the selected one
+    $('#mode-desc'+ mode).show();
+  });
 });
