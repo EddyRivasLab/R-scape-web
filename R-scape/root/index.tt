@@ -92,8 +92,9 @@
           </label>
         </div>
       </div>
+      <button type="submit" class="btn btn-primary">Upload and run R-scape analysis</button>
     </div>
-    <div class="col-md-6">
+    <div class="col-sm-6">
       <div class="panel panel-default mode-desc" id="mode-desc1">
         <div class="panel-heading">One-set test</div>
         <div class="panel-body">
@@ -144,11 +145,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-11 col-sm-offset-1">
-      <button type="submit" class="btn btn-primary">Upload and run R-scape analysis</button>
     </div>
   </div>
 </form>
