@@ -47,12 +47,12 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-11 col-sm-offset-1">
-    <h3>Analyze an RNA alignment</h3>
-    <p> 
-    Find potential base pairs with statistically significant covariation support.
-    <form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
+<form enctype="multipart/form-data" method="post" action="[% c.uri_for("/results") %]">
+  <div class="row">
+    <div class="col-sm-11 col-sm-offset-1">
+      <h3>Analyze an RNA alignment</h3>
+      <p>Find base pairs with statistically significant covariation support.</p>
+      <p>Optionally, propose a structure compatible with all significantly covarying base pairs.</p>
       <div class="form-group">
         <label for="stofile">Choose a Stockholm alignment file to upload:</label>
         <input type="file" id="stofile" name="stofile">
@@ -61,10 +61,48 @@
         <label for="evalue">E-value</label>
         <input type="text" id="evalue" name="evalue" value="0.05">
       </div>
-      <button type="submit" class="btn btn-primary">Upload and run R-scape analysis</button>
-    </form>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-sm-5 col-sm-offset-1">
+      <div class="form-group">
+        <h4>Choose a mode</h4>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode1" value="mode1" checked>
+            One-set test
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode2" value="mode2">
+            One-set test + report a R-scape structure
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode3" value="mode3">
+            Two-set test
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode3" value="mode3">
+            Two-set test + report a R-scape structure
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <p>Mode descriptions</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-11 col-sm-offset-1">
+      <button type="submit" class="btn btn-primary">Upload and run R-scape analysis</button>
+    </div>
+  </div>
+</form>
 
 <hr>
 <div class="row shorts">
