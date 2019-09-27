@@ -4,36 +4,39 @@
     <p class="lead">RNA Structural Covariation Above Phylogenetic Expectation</p>
 
 
-    <div class="well">
-    <p>
-    R-scape looks for evidence of a conserved RNA secondary structure
-    by measuring pairwise
-    covariations observed in an input multiple sequence alignment. It analyzes all possible
-    pairs, including those in your proposed structure (if you
-    provide one).
-    </p>
+    <div class="well main_message">
+    <p>R-scape looks for evidence of a conserved RNA structure by measuring pairwise covariations
+    observed in an input multiple sequence alignment. It analyzes all possible pairs, including those in
+    your proposed structure (if you provide one).</p>
 
     <p> The input is an RNA multiple sequence alignment <a
     href="https://en.wikipedia.org/wiki/Stockholm_format">in Stockholm
-    format</a>, optionally (usually) with an annotated secondary
-    structure. The structure may include pseudoknots. Only the first
-    alignment in the file is analyzed; if you submit a Stockholm file
-    containing more than one alignment, the others are ignored.  </p>
+    format</a>, optionally (usually) with an annotated consensus secondary
+    structure. The structure may include pseudoknots. Only the first alignment in the file is analyzed;
+    if you submit a Stockholm file containing more than one alignment, the others are ignored.</p>
 
-    <p> The output is a list of covarying pairs that are statistically
-    significant at a given E-value. The E-value (expectation value)
-    sets a threshold for the number of false positives expected.
-    R-scape uses a null hypothesis that takes phylogenetic
-    correlations and base composition biases into account, 
-    sources of apparent pairwise covariation that are not due to
-    conserved RNA structure. </p>
+    <p>The output is a list of covarying pairs that are statistically significant at a given E-value. The
+    E-value (expectation value) sets a threshold for the number of false positives expected. R-scape uses
+    a null hypothesis that takes phylogenetic correlations and base composition biases into account,
+    which can be sources of apparent pairwise covariation that are not due to conserved RNA structure.
+    For each covarying pair, the output also reports the inferred number of substitutions that occurred
+    at these two positions in the phylogenetic tree, and the estimated statistical power for R-scape to
+    detect a significantly covarying base pair when that much variation is present.</p>
 
-    <p> 
-    If the input alignment does not have an annotated secondary
-    structure, R-scape calculates the structure with the highest
-    amount of covariation for the target E-value (using constrained
-    CYK folding with the probabilistic TORNADO "basic_grammar" model).
-    </p>
+    <p>R-scape has two different modes of operation which determine how it calculates E-values, for
+    which it needs to know how many possible base pairs were tested (i.e. E-values are multiple-testcorrected).
+    In the one-set test mode, all possible L(L-1)/2 pairs (for an alignment of length L)
+    are considered equivalently. Alternatively, if a consensus structure is provided, R-scape allows a
+    two-set test. One test is on the proposed structure (the set of basepairs); the other independent
+    test is on all other possible pairs in the alignment (the set of non basepairs). On the set of basepairs,
+    R-scape extracts the alignments support for the annotated structure. On the set of non basepairs,
+    R-scape identifies other possible covarying basepairs not present in the given structure.</p>
+
+    <p>If you&apos;re trying to determine if a conserved structure exists, you need to use the one-set test.
+    If you&apos;ve used covariation analysis to predict your consensus structure, you still want to use the
+    one-set test. If you are trying to detect covariation support for base pairs in a annotated consensus
+         structure that you&apos;ve proposed based on criteria independent of covariation, you can use the two-set
+         test, because it&apos;s more sensitive (the number of base pairs tested is much smaller).</p>
 
     <p>
     To see an example, you can download <a href="http://rfam.xfam.org/family/RF00167/alignment?acc=RF00167&format=stockholm&download=1">the Rfam12.0
