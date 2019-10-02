@@ -51,15 +51,35 @@ sub run {
   # save the uploaded file for later use.
   copy($opts->{upload}->tempname, $upload_file_path);
 
-  # TODO: modify the command that is run, based on the mode chosen.
 
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
   $cmd   .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
   $cmd   .= 'export RSCAPE_HOME='    . $self->rscape_dir . '; ';
 
-  system("grep '#=GC SS_cons' $upload_file_path > /dev/null");
-  if ($? == 0) { $cmd   .= $self->rscape_dir . '/bin/R-scape -s    2>&1 >> /dev/null'; }
-  else         { $cmd   .= $self->rscape_dir . '/bin/R-scape --fold 2>&1 >> /dev/null'; }
+  # mode mapping
+  # ============================
+  # 1 -> One-set test
+  # 2 -> One-set test + report a R-scape structure
+  # 3 -> Two-set test
+  # 4 -> Two-set test + report a R-scape structure
+
+  # exit early if mode 3/4 are chosen and the upload doesn't contain a structure
+  if ($opts->{mode} =~ /^3|4$/) {
+    use DDP; p $opts;
+    system("grep '#=GC SS_cons' $upload_file_path > /dev/null");
+    if ($? != 0) {
+      # return error message to trigger redirect.
+      return ('alignment_missing');
+    }
+  }
+
+  # modify the command that is run, based on the mode chosen.
+  if ($opts->{mode} == 1)    { $cmd .= $self->rscape_dir . '/bin/R-scape           2>&1 >> /dev/null'; }
+  elsif ($opts->{mode} == 2) { $cmd .= $self->rscape_dir . '/bin/R-scape --fold    2>&1 >> /dev/null'; }
+  elsif ($opts->{mode} == 3) { $cmd .= $self->rscape_dir . '/bin/R-scape -s        2>&1 >> /dev/null'; }
+  elsif ($opts->{mode} == 4) { $cmd .= $self->rscape_dir . '/bin/R-scape -s --fold 2>&1 >> /dev/null'; }
+
+
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
     $cmd .= ' -E ' . $opts->{evalue};

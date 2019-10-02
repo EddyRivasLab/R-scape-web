@@ -97,7 +97,11 @@ sub process : Private {
     });
   };
   if ($tmp_id) {
-    $c->response->redirect($c->uri_for('/results/' . $tmp_id));
+    if ($tmp_id eq 'alignment_missing') {
+      $c->go('alignment_missing');
+    } else {
+      $c->response->redirect($c->uri_for('/results/' . $tmp_id));
+    }
   }
   return;
 }
@@ -155,6 +159,13 @@ sub not_found : Private {
   $c->stash->{template} = 'not_found.tt';
   return;
 }
+
+sub alignment_missing : Private {
+  my ($self, $c) = @_;
+  $c->stash->{template} = 'alignment_missing.tt';
+  return;
+};
+
 
 
 =head1 AUTHOR

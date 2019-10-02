@@ -1,0 +1,8 @@
+<h2>Results</h2>
+
+<div class="alert alert-danger">
+  <p>The uploaded nucleotide alignment does not include a structure.</p>
+  <p>Cannot use two-set test option.</p>
+</div>
+
+[% INCLUDE upload_form.tt %]
