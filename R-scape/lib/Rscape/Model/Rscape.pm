@@ -39,6 +39,7 @@ sub run {
   my $out = $encoder->encode({
     upload_name => $upload_name,
     evalue => $opts->{evalue},
+    mode => $opts->{mode},
   });
 
   open my $meta, '>', $tmp_dir . '/meta';
@@ -50,13 +51,15 @@ sub run {
   # save the uploaded file for later use.
   copy($opts->{upload}->tempname, $upload_file_path);
 
+  # TODO: modify the command that is run, based on the mode chosen.
+
   my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
   $cmd   .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
   $cmd   .= 'export RSCAPE_HOME='    . $self->rscape_dir . '; ';
 
   system("grep '#=GC SS_cons' $upload_file_path > /dev/null");
   if ($? == 0) { $cmd   .= $self->rscape_dir . '/bin/R-scape -s    2>&1 >> /dev/null'; }
-  else         { $cmd   .= $self->rscape_dir . '/bin/R-scape --cyk 2>&1 >> /dev/null'; }
+  else         { $cmd   .= $self->rscape_dir . '/bin/R-scape --fold 2>&1 >> /dev/null'; }
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
     $cmd .= ' -E ' . $opts->{evalue};

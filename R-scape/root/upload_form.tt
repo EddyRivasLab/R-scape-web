@@ -9,6 +9,32 @@
         <label for="evalue">E-value</label>
         <input type="text" id="evalue" name="evalue" value="0.05">
       </div>
+      <div class="form-group">
+        <h4>Choose a mode</h4>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode1" value="1" checked>
+            One-set test
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode2" value="2">
+            One-set test + report a R-scape structure
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode3" value="3">
+            Two-set test
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="mode" id="mode4" value="4">
+            Two-set test + report a R-scape structure
+          </label>
+        </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>

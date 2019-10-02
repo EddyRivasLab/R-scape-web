@@ -93,6 +93,7 @@ sub process : Private {
     $tmp_id = $c->model('Rscape')->run({
       upload => $c->req->upload('stofile'),
       evalue => $c->req->param('evalue'),
+      mode   => $c->req->param('mode'),
     });
   };
   if ($tmp_id) {
