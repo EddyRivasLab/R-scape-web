@@ -28,17 +28,44 @@ has 'gnuplot_ps' => (
   is => 'ro',
 );
 
+sub determine_name_from_sto_file {
+  my ($self, $filepath) = @_;
+  # TODO: rscape no longer seems to name the files based on the input name, but on
+  # the name in the ACC and ID fields of the .sto file. So we need to parse the file
+  # and generate the file names, based on that.
+  # open file
+  open my $upload, '<', $filepath;
+  my $id = undef;
+  my $acc = undef;
+
+  while (my $row = <$upload>) {
+    chomp $row;
+    # read ID
+    if ($row =~ /^#=GF ID (.*)/) {
+      $id = $1;
+    }
+    # read ACC
+    if ( $row =~ /^#=GF AC (.*)/) {
+      $acc = $1;
+    }
+    last if $id && $acc;
+  }
+  # combine and return
+  return "${acc}_$id";
+}
+
 sub run {
   my ($self, $opts) = @_;
   mkdir($self->dir_path);
   my $tmp_dir = tempdir( 'XXXXXXXXX', DIR => $self->dir_path );
 
-  my $upload_name = $opts->{upload}->filename;
-  my $upload_file_path =  $tmp_dir . '/' . $opts->{upload}->filename;
+
+  # save the file to a name we specify, so that nefarious actors can't
+  # upload to a file path we don't expect.
+  my $upload_file_path =  $tmp_dir . '/uploaded.sto';
 
   # save the uploaded file for later use.
   copy($opts->{upload}->tempname, $upload_file_path);
-
 
   # check here to see if we have SS_cons present in the upload.
   my $has_ss_cons = 0;
@@ -46,6 +73,8 @@ sub run {
   if ($? == 0) {
     $has_ss_cons = 1;
   }
+
+  my $upload_name = $self->determine_name_from_sto_file($upload_file_path);
 
   # save the meta data to disk for later use in the results display.
   my $encoder = Sereal::Encoder->new();
