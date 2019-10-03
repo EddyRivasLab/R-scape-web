@@ -75,11 +75,11 @@
     </table>
     [% END %]
 
-    <h3>Distribution of Scores</h3>
-    <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
   </div>
 
   <div class="col-md-6">
+    <h3>Distribution of Scores</h3>
+    <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
     [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
     <h3>R2R image</h3>
     <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r/query.svg">
