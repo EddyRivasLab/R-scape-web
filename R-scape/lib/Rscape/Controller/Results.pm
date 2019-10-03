@@ -70,7 +70,7 @@ sub svg_images : Path : Args(3) {
   chdir $results_dir;
   my @files = glob $glob_pattern;
 
-  if ($mode =~ /^(2|4)$/) {
+  if ($mode =~ /^(2|4)$/ && $type =~ /^(dplot|r2r)$/) {
     @files = grep(/\.fold\./, @files);
   } else {
     @files = grep(!/\.fold\./, @files);
