@@ -52,16 +52,40 @@
     <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]">
       <button class="btn btn-default">Download</button>
     </form>
+    [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
+     <table class="powerresults table">
+      <thead>
+        <tr>
+          <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="5">Substitutions<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="6">Power<span class="arrow"></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        [% FOREACH row IN c.stash.power_file %]
+        <tr>
+          <td>[% row.0 %]</td>
+          <td>[% row.1 %]</td>
+          <td>[% row.2 %]</td>
+          <td>[% row.3 %]</td>
+        </tr>
+        [% END %]
+      </tbody>
+    </table>
+    [% END %]
 
     <h3>Distribution of Scores</h3>
     <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
   </div>
 
   <div class="col-md-6">
+    [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
     <h3>R2R image</h3>
-    <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r.svg">
+    <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r/query.svg">
 
     <h3>Dot plot</h3>
     <img id="dplotimage" src="[% c.stash.tmp_id %]/dplot/query.svg">
+    [% END %]
   </div>
 </div>

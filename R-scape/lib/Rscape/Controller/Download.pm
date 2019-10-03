@@ -55,6 +55,8 @@ sub read_results : Private {
   my $name = $meta->{upload_name};
   $name =~ s/\.[^\.]*$//;
 
+  # TODO: need to change file download, based on mode and SS_cons.
+
   my $out_path = $dir . '/' . $name . '.out';
 
   my $output_file = $out_path;

@@ -30,9 +30,10 @@ has 'gnuplot_ps' => (
 
 sub determine_name_from_sto_file {
   my ($self, $filepath) = @_;
-  # TODO: rscape no longer seems to name the files based on the input name, but on
+  # R-scape no longer seems to name the files based on the input name, but on
   # the name in the ACC and ID fields of the .sto file. So we need to parse the file
   # and generate the file names, based on that.
+
   # open file
   open my $upload, '<', $filepath;
   my $id = undef;
