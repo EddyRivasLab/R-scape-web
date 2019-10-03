@@ -34,27 +34,31 @@ sub run {
   my $tmp_dir = tempdir( 'XXXXXXXXX', DIR => $self->dir_path );
 
   my $upload_name = $opts->{upload}->filename;
-
-  my $encoder = Sereal::Encoder->new();
-  my $out = $encoder->encode({
-    upload_name => $upload_name,
-    evalue => $opts->{evalue},
-    mode => $opts->{mode},
-  });
-
-  open my $meta, '>', $tmp_dir . '/meta';
-  print $meta $out;
-  close $meta;
-
   my $upload_file_path =  $tmp_dir . '/' . $opts->{upload}->filename;
 
   # save the uploaded file for later use.
   copy($opts->{upload}->tempname, $upload_file_path);
 
 
-  my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
-  $cmd   .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
-  $cmd   .= 'export RSCAPE_HOME='    . $self->rscape_dir . '; ';
+  # check here to see if we have SS_cons present in the upload.
+  my $has_ss_cons = 0;
+  system("grep '#=GC SS_cons' $upload_file_path > /dev/null");
+  if ($? == 0) {
+    $has_ss_cons = 1;
+  }
+
+  # save the meta data to disk for later use in the results display.
+  my $encoder = Sereal::Encoder->new();
+  my $out = $encoder->encode({
+    upload_name => $upload_name,
+    evalue => $opts->{evalue},
+    mode => $opts->{mode},
+    has_ss_cons => $has_ss_cons,
+  });
+
+  open my $meta, '>', $tmp_dir . '/meta';
+  print $meta $out;
+  close $meta;
 
   # mode mapping
   # ============================
@@ -63,22 +67,24 @@ sub run {
   # 3 -> Two-set test
   # 4 -> Two-set test + report a R-scape structure
 
-  # exit early if mode 3/4 are chosen and the upload doesn't contain a structure
+  # exit early if mode 3/4 are chosen and the upload doesn't contain a nucleotide alignment
   if ($opts->{mode} =~ /^3|4$/) {
-    use DDP; p $opts;
-    system("grep '#=GC SS_cons' $upload_file_path > /dev/null");
-    if ($? != 0) {
+    if (!$has_ss_cons) {
       # return error message to trigger redirect.
       return ('alignment_missing');
     }
   }
 
-  # modify the command that is run, based on the mode chosen.
-  if ($opts->{mode} == 1)    { $cmd .= $self->rscape_dir . '/bin/R-scape           2>&1 >> /dev/null'; }
-  elsif ($opts->{mode} == 2) { $cmd .= $self->rscape_dir . '/bin/R-scape --fold    2>&1 >> /dev/null'; }
-  elsif ($opts->{mode} == 3) { $cmd .= $self->rscape_dir . '/bin/R-scape -s        2>&1 >> /dev/null'; }
-  elsif ($opts->{mode} == 4) { $cmd .= $self->rscape_dir . '/bin/R-scape -s --fold 2>&1 >> /dev/null'; }
+  # start building the R-scape command to execute
+  my $cmd = 'export GNUPLOT='. $self->gnuplot . '; ';
+  $cmd   .= 'export GNUPLOT_PS_DIR=' . $self->gnuplot_ps . '; ';
+  $cmd   .= 'export RSCAPE_HOME='    . $self->rscape_dir . '; ';
 
+  # modify the command that is run, based on the mode chosen.
+  if ($opts->{mode} == 1)    { $cmd .= $self->rscape_dir . '/bin/R-scape           '; }
+  elsif ($opts->{mode} == 2) { $cmd .= $self->rscape_dir . '/bin/R-scape --fold    '; }
+  elsif ($opts->{mode} == 3) { $cmd .= $self->rscape_dir . '/bin/R-scape -s        '; }
+  elsif ($opts->{mode} == 4) { $cmd .= $self->rscape_dir . '/bin/R-scape -s --fold '; }
 
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
@@ -86,11 +92,18 @@ sub run {
   }
 
   $cmd .= ' --onemsa --outdir ' . $tmp_dir . ' ' . $upload_file_path;
+  $cmd .= ' 2>&1 >> /dev/null';
 
   if ($ENV{'CATALYST_DEBUG'}) {
     warn "$cmd\n";
   }
 
+  # save the executed cmd for posterity
+  open my $cmd_fh, '>', $tmp_dir . '/cmd';
+  print $cmd_fh $cmd;
+  close $cmd_fh;
+
+  # run it and wait for the output.
   system($cmd);
 
   return fileparse($tmp_dir);
