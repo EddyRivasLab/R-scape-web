@@ -3,11 +3,16 @@
 <p class="text-muted">Click on a column header to sort.</p>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7">
     <table class="outresults table">
       <thead>
         <tr>
+          [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+          <th>in given structure</th>
+          <th>in R-scape structure</th>
+          [% ELSE %]
           <th>Symbol</th>
+          [% END %]
           <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="3">Covariation Score<span class="arrow"></span></th>
@@ -18,20 +23,35 @@
       </thead>
       <tbody>
         [% FOREACH row IN c.stash.out_file %]
-        [% IF row.0 == '*' %]
-        <tr class="covary">
-        [% ELSIF row.0 == '~' %]
-        <tr class="compat">
-        [% ELSE %]
         <tr>
-        [% END %]
-          <td>[% row.0 %]</td>
+          [% IF row.0 == '*' %]
+          <td class="covary">[% row.0 %]</td>
+          [% ELSIF row.0 == '~' %]
+          <td class="compat">[% row.0 %]</td>
+          [% ELSE %]
+          <td class="noncompat">[% row.0 %]</td>
+          [% END %]
+          [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+            [% IF row.1 == '*' %]
+            <td class="covary">[% row.1 %]</td>
+            [% ELSIF row.1 == '~' %]
+            <td class="compat">[% row.1 %]</td>
+            [% ELSE %]
+            <td class="noncompat">[% row.1 %]</td>
+            [% END %]
+          [% ELSE %]
           <td>[% row.1 %]</td>
+          [% END %]
           <td>[% row.2 %]</td>
           <td>[% row.3 %]</td>
           <td>[% row.4 %]</td>
           <td>[% row.5 %]</td>
+          [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+          <td>[% row.6 %]</td>
+          <td>[% row.8 %]</td>
+          [% ELSE %]
           <td>[% row.7 %]</td>
+          [% END %]
         </tr>
         [% END %]
       </tbody>
@@ -53,6 +73,7 @@
       <button class="btn btn-default">Download</button>
     </form>
     [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
+     <h3>Power output</h3>
      <table class="powerresults table">
       <thead>
         <tr>
@@ -77,7 +98,7 @@
 
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-5">
     <h3>Distribution of Scores</h3>
     <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
     [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
