@@ -1,4 +1,13 @@
-<h2>Results</h2>
+<h2>Results for [% IF c.stash.mode == 1 %]
+  "Evaluate region for conserved structure"
+  [% ELSIF c.stash.mode == 2 %]
+  "Predict new structure"
+  [% ELSIF c.stash.mode == 3 %]
+  "Evaluate given structure"
+  [% ELSIF c.stash.mode == 4 %]
+  "Improve given structure"
+  [% END %]
+</h2>
 <p>E-value threshold: [% evalue %]</p>
 <p class="text-muted">Click on a column header to sort.</p>
 
