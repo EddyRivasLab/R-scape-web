@@ -54,8 +54,9 @@ $(document).ready(function () {
 
   // set up the rotating descriptions when selecting a mode on the home page.
   $('.mode-desc').hide();
-  // show the selected on
-  $('#mode-desc1').show();
+  // show the selected one
+  var selected = $("input[name$='mode']:checked").val();
+  $('#mode-desc'+ selected).show();
   // We only want to show one at a time as they take up a lot of space.
   $("input[name$='mode']").click(function() {
     var mode = $(this).val();
