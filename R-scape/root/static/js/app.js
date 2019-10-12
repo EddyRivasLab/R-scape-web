@@ -51,6 +51,7 @@ $.fn.sortable = function(){
 
 $(document).ready(function () {
   $('.outresults').sortable();
+  $('.powerresults').sortable();
 
   // set up the rotating descriptions when selecting a mode on the home page.
   $('.mode-desc').hide();

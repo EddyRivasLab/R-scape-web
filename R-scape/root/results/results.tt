@@ -96,19 +96,27 @@
      <table class="powerresults table">
       <thead>
         <tr>
+          <th>Covarying pair<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="5">Substitutions<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="6">Power<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="3">Substitutions<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="4">Power<span class="arrow"></span></th>
         </tr>
       </thead>
       <tbody>
         [% FOREACH row IN c.stash.power_file %]
         <tr>
-          <td>[% row.0 %]</td>
+          [% IF row.0 == '*' %]
+          <td class="covary">[% row.0 %]</td>
+          [% ELSIF row.0 == '~' %]
+          <td class="compat">[% row.0 %]</td>
+          [% ELSE %]
+          <td class="noncompat">[% row.0 %]</td>
+          [% END %]
           <td>[% row.1 %]</td>
           <td>[% row.2 %]</td>
           <td>[% row.3 %]</td>
+          <td>[% row.4 %]</td>
         </tr>
         [% END %]
       </tbody>

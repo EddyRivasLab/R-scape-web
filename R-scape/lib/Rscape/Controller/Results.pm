@@ -149,8 +149,14 @@ sub read_results : Private {
   open my $power_file_handle, '<', $power_file_path;
 
   while (<$power_file_handle>) {
-    next unless ($_ =~ /^\# (\d+)\s+(\d+)\s+(\d+)\s+(\d.\d+)$/);
-    push @{$c->stash->{power_file}}, [$1,$2,$3,$4];
+    # skip comments and the first blank line.
+    next if ($_ =~ /^\#/ || $. < 2);
+    my @line = split ' ', $_;
+    # if we don't get a * then add a blank line in its' place.
+    if (scalar @line < 5) {
+      unshift @line, '';
+    }
+    push @{$c->stash->{power_file}}, \@line;
   }
 
   close $power_file_handle;
