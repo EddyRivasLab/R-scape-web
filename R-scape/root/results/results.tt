@@ -13,6 +13,7 @@
 
 <div class="row">
   <div class="col-md-7">
+    <h3>List of covarying basepairs</h3>
     <table class="outresults table">
       <thead>
         <tr>
@@ -82,7 +83,16 @@
       <button class="btn btn-default">Download</button>
     </form>
     [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
-     <h3>Power output</h3>
+     <h3>[% IF c.stash.mode == 1 %]
+       Power analysis of given structure
+       [% ELSIF c.stash.mode == 2 %]
+       Power analysis of CaCoFold structure
+       [% ELSIF c.stash.mode == 3 %]
+       Power analysis of given structure
+       [% ELSIF c.stash.mode == 4 %]
+       Power analysis of CaCoFold structure
+       [% END %]
+     </h3>
      <table class="powerresults table">
       <thead>
         <tr>
