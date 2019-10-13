@@ -18,17 +18,23 @@
       <thead>
         <tr>
           [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+          <th>in CaCoFold structure</th>
           <th>in given structure</th>
-          <th>in R-scape structure</th>
+          <th class="sortable numeric" data-column="2">Left base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="3">Right base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="4">Covariation Score<span class="arrow"></span></th>
+          <th class="sortable evalue" data-column="5">E-value<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="6">Substitutions<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="7">Power<span class="arrow"></span></th>
           [% ELSE %]
-          <th>Symbol</th>
-          [% END %]
+          <th>in given structure</th>
           <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="3">Covariation Score<span class="arrow"></span></th>
           <th class="sortable evalue" data-column="4">E-value<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="5">Substitutions<span class="arrow"></span></th>
           <th class="sortable numeric" data-column="6">Power<span class="arrow"></span></th>
+          [% END %]
         </tr>
       </thead>
       <tbody>
@@ -66,18 +72,16 @@
         [% END %]
       </tbody>
     </table>
-    <p>Significantly covarying pairs present in the given structure are
-    marked green. Other significantly covarying pairs are marked orange if
-    compatible with the given structure or black if they are not. Orange
-    covarying pairs could be an indication of an under annotated
-    structure. Black covarying pairs could indicate that the given
-    structure is wrong and covariation supports an alternative structure,
-    covarying tertiary interactions, or a false positive.
-    </p>
+    <p> Significantly covarying pairs present in the structure are marked green.
+    Other covarying pairs are marked orange if both residues are unpaired in the
+    structure or there is no structure present. Orange covarying pairs could be
+    an indication of an under annotated structure or pseudoknots. Black covarying
+    pairs could indicate covariation supports for an alternative structure,
+    tertiary interactions, or false positives.</p>
     <ul class="key">
-      <li><span class="covary">*</span> A covarying base pair</li>
-      <li><span class="compat">~</span> A covarying pair compatible with the secondary structure</li>
-      <li><span>&nbsp;</span> A covarying pair not compatible with the secondary structure</li>
+      <li><span class="covary">*</span> Base pair in the structure</li>
+      <li><span class="compat">~</span> Both residues unpaired in the structure, or no structure is present</li>
+      <li><span>&nbsp;</span> At least one residue is involved in other pairing in the structure</li>
     </ul>
     <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]">
       <button class="btn btn-default">Download</button>
