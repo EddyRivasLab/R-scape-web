@@ -101,6 +101,7 @@ sub process : Private {
       $c->response->redirect($c->uri_for('/results/' . $tmp_id));
     }
   }
+  $c->go('bad_input');
   return;
 }
 
