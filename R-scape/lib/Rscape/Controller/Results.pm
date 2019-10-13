@@ -150,6 +150,9 @@ sub read_results : Private {
   open my $power_file_handle, '<', $power_file_path;
 
   while (<$power_file_handle>) {
+    if ($_ =~ /^\# (avg|BPAIRS)/) {
+      push @{$c->stash->{power_meta}}, $_;
+    }
     # skip comments and the first blank line.
     next if ($_ =~ /^\#/ || $. < 2);
     my @line = split ' ', $_;

@@ -125,6 +125,9 @@
         [% END %]
       </tbody>
     </table>
+    [% FOREACH row IN c.stash.power_meta %]
+    <p>[% row %]</p>
+    [% END %]
     <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]/power">
       <button class="btn btn-default">Download</button>
     </form>
