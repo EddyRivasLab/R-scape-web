@@ -14,25 +14,25 @@
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode1" value="1" checked>
-            One-set test
+            Evaluate regions for conserved structure
           </label>
         </div>
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode2" value="2">
-            One-set test + report a R-scape structure
+            Predict new structure
           </label>
         </div>
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode3" value="3">
-            Two-set test
+            Evaluate given structure
           </label>
         </div>
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode4" value="4">
-            Two-set test + report a R-scape structure
+            Improve given structure
           </label>
         </div>
       <button type="submit" class="btn btn-primary">Submit</button>

@@ -61,25 +61,25 @@
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode1" value="1" checked>
-            One-set test
+            Evaluate regions for conserved structure
           </label>
         </div>
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode2" value="2">
-            One-set test + report a R-scape structure
+            Predict new structure
           </label>
         </div>
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode3" value="3">
-            Two-set test
+            Evaluate given structure
           </label>
         </div>
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode4" value="4">
-            Two-set test + report a R-scape structure
+            Improve given structure
           </label>
         </div>
       </div>
@@ -155,18 +155,16 @@
 
   <div class="col-sm-4">
      <h3> Publications </h3>
-     <p> E Rivas, J Clements, and SR Eddy,
+     <p>A statistical test for conserved RNA structure shows lack of evidence for structure in lncRNAs. E Rivas, J Clements, and SR Eddy,
          <a href="https://www.nature.com/nmeth/journal/v14/n1/full/nmeth.4066.html">
-           <i> Nature Methods </i> 14:45-48, 2017.</a></p>
-     <p>Here is a
+           <i> Nature Methods </i> 14:45-48, 2017.</a> Here is a
      <a href="http://eddylab.org/publications/RivasEddy16/RivasEddy16-preprint.pdf">preprint of the manuscript</a>,
      and the accompanying
      <a href="http://eddylab.org/publications/RivasEddy16/RivasEddy16-supplement.tar.gz">supplementary material tarball.</a>
      </p>
-     <p> E Rivas, J Clements, and SR Eddy,
+     <p>Estimating the power of sequence covariation for detecting conserved RNA structure. E Rivas, J Clements, and SR Eddy,
        <a href="https://doi.org/10.1101/789404">
-         <i>bioRxiv 789404; doi:</i> https://doi.org/10.1101/789404</a></p>
-     <p>Here is a
+         <i>bioRxiv 789404; doi:</i> https://doi.org/10.1101/789404</a> Here is a
      <a href="http://eddylab.org/publications/Rivas19/Rivas19-preprint.pdf">preprint of the manuscript</a>,
      and the accompanying
      <a href="http://eddylab.org/publications/Rivas19/Rivas19-supplement.tar.gz">supplementary material tarball.</a>

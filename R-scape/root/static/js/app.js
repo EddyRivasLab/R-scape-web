@@ -27,7 +27,11 @@ $.fn.sortable = function(){
 
     // now sort the rows array
     if ($(this).hasClass('numeric')) {
-      rows.sort(function (a, b) { return a[0] - b[0] ; });
+      if ($(this).hasClass('reverse')) {
+        rows.sort(function (b, a) { return a[0] - b[0] ; });
+      } else {
+        rows.sort(function (a, b) { return a[0] - b[0] ; });
+      }
     }
     else if ($(this).hasClass('evalue')) {
       rows.sort(function (a, b) { return parseFloat(a[0]) - parseFloat(b[0]) ; });
