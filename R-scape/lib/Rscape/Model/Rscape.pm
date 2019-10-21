@@ -30,6 +30,11 @@ has 'gnuplot_ps' => (
 
 sub determine_name_from_sto_file {
   my ($self, $filepath) = @_;
+
+  # when r-scape is run with the --outname flag we can set a standard name
+  # removing the need to open the input file and determine the name.
+  return "output";
+
   # R-scape no longer seems to name the files based on the input name, but on
   # the name in the ACC and ID fields of the .sto file. So we need to parse the file
   # and generate the file names, based on that.
@@ -121,7 +126,7 @@ sub run {
     $cmd .= ' -E ' . $opts->{evalue};
   }
 
-  $cmd .= ' --onemsa --outdir ' . $tmp_dir . ' ' . $upload_file_path;
+  $cmd .= ' --onemsa --outdir ' . $tmp_dir . ' --outname output ' . $upload_file_path;
   $cmd .= ' 2>&1 >> /dev/null';
 
   if ($ENV{'CATALYST_DEBUG'}) {
