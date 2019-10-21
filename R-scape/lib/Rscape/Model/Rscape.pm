@@ -42,11 +42,11 @@ sub determine_name_from_sto_file {
   while (my $row = <$upload>) {
     chomp $row;
     # read ID
-    if ($row =~ /^#=GF ID (.*)/) {
+    if ($row =~ /^#=GF ID\s*(\w*)/) {
       $id = $1;
     }
     # read ACC
-    if ( $row =~ /^#=GF AC (.*)/) {
+    if ( $row =~ /^#=GF AC\s*(\w*)/) {
       $acc = $1;
     }
     last if $id && $acc;
