@@ -27,7 +27,11 @@ $.fn.sortable = function(){
 
     // now sort the rows array
     if ($(this).hasClass('numeric')) {
-      rows.sort(function (a, b) { return a[0] - b[0] ; });
+      if ($(this).hasClass('reverse')) {
+        rows.sort(function (b, a) { return a[0] - b[0] ; });
+      } else {
+        rows.sort(function (a, b) { return a[0] - b[0] ; });
+      }
     }
     else if ($(this).hasClass('evalue')) {
       rows.sort(function (a, b) { return parseFloat(a[0]) - parseFloat(b[0]) ; });
@@ -51,4 +55,19 @@ $.fn.sortable = function(){
 
 $(document).ready(function () {
   $('.outresults').sortable();
+  $('.powerresults').sortable();
+
+  // set up the rotating descriptions when selecting a mode on the home page.
+  $('.mode-desc').hide();
+  // show the selected one
+  var selected = $("input[name$='mode']:checked").val();
+  $('#mode-desc'+ selected).show();
+  // We only want to show one at a time as they take up a lot of space.
+  $("input[name$='mode']").click(function() {
+    var mode = $(this).val();
+    // mark all descriptions as hidden
+    $('.mode-desc').hide();
+    // show the selected one
+    $('#mode-desc'+ mode).show();
+  });
 });

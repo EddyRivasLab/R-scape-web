@@ -1,0 +1,7 @@
+<h2>Results</h2>
+
+<div class="alert alert-danger">
+  <p>This option requires a consensus structure. The provided alignment does not include one.</p>
+</div>
+
+[% INCLUDE upload_form.tt %]

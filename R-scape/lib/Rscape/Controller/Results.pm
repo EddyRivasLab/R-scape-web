@@ -47,39 +47,37 @@ sub results : Path : Args(1) {
   return;
 }
 
-sub r2r_image : Path : Args(2) {
-  my ($self, $c, $dir) = @_;
-  my $results_dir = $c->config->{'Model::Rscape'}->{dir_path} . '/' . $dir;
-
-  my $orig_dir = getcwd;
-  chdir $results_dir;
-  my @files = glob '*.R2R.sto.svg';
-  my $contents = read_file("$results_dir/" . $files[0]);
-  chdir $orig_dir;
-
-  $c->res->content_type('image/svg+xml');
-  $c->res->body($contents);
-  return;
-}
-
-sub dot_plot : Path : Args(3) {
+sub svg_images : Path : Args(3) {
   my ($self, $c, $dir, $type) = @_;
   my $results_dir = $c->config->{'Model::Rscape'}->{dir_path} . '/' . $dir;
+
+  # figure out the search mode to return the correct images.
+  my $decoder = Sereal::Decoder->new();
+  my $encoded_meta = read_file("$results_dir/meta");
+  my $meta = $decoder->decode($encoded_meta);
+  my $mode = $meta->{mode};
+
+  # default to $type eq 'his'
+  my $glob_pattern = '*.surv.svg';
+
+  if ($type eq 'dplot') {
+    $glob_pattern = '*.dplot.svg';
+  } elsif ($type eq 'r2r') {
+    $glob_pattern = '*.R2R.sto.svg';
+  }
+
   my $orig_dir = getcwd;
-
   chdir $results_dir;
+  my @files = glob $glob_pattern;
 
-  my @files = glob '*.dplot.svg';
-
-  if ($type eq "his") {
-    @files = glob '*.surv.svg';
+  if ($mode =~ /^(2|4)$/ && $type =~ /^(dplot|r2r)$/) {
+    @files = grep(/\.fold\./, @files);
+  } else {
+    @files = grep(!/\.fold\./, @files);
   }
 
   my $contents = read_file("$results_dir/" . $files[0]);
-
   chdir $orig_dir;
-
-
 
   $c->res->content_type('image/svg+xml');
   $c->res->body($contents);
@@ -93,11 +91,17 @@ sub process : Private {
     $tmp_id = $c->model('Rscape')->run({
       upload => $c->req->upload('stofile'),
       evalue => $c->req->param('evalue'),
+      mode   => $c->req->param('mode'),
     });
   };
   if ($tmp_id) {
-    $c->response->redirect($c->uri_for('/results/' . $tmp_id));
+    if ($tmp_id eq 'alignment_missing') {
+      $c->go('alignment_missing');
+    } else {
+      $c->response->redirect($c->uri_for('/results/' . $tmp_id));
+    }
   }
+  $c->go('bad_input');
   return;
 }
 
@@ -110,12 +114,21 @@ sub read_results : Private {
   my $meta = $decoder->decode($encoded_meta);
 
   $c->stash->{evalue} = $meta->{evalue};
-
   my $name = $meta->{upload_name};
-  $name =~ s/\.[^\.]*$//;
+  my $mode = $c->stash->{mode} = $meta->{mode};
+  my $has_ss_cons = $c->stash->{has_ss_cons} = $meta->{has_ss_cons};
 
-  my $out_path = $dir . '/' . $name . '.out';
+  # read different output files, based on the search mode
+  my $out_path = $dir . '/' . $name . '.cov';
+  my $power_file_path = $dir . '/' . $name . '.power';
 
+  # open the .fold version of the files if modes 2|4 are selected.
+  if ($mode =~ /^(2|4)$/) {
+    $out_path = $dir . '/' . $name . '.fold.cov';
+    $power_file_path = $dir . '/' . $name . '.fold.power';
+  }
+
+  # read data from the *.cov file
   my $output_file = $out_path;
 
   if (-z $output_file) {
@@ -130,6 +143,29 @@ sub read_results : Private {
     push @{$c->stash->{out_file}}, \@line;
   }
 
+  close $output;
+
+
+  # open the power file and place it in the stash for use in the results template.
+  open my $power_file_handle, '<', $power_file_path;
+
+  while (<$power_file_handle>) {
+    if ($_ =~ /^\# (avg|BPAIRS)/) {
+      push @{$c->stash->{power_meta}}, $_;
+    }
+    # skip comments and the first blank line.
+    next if ($_ =~ /^\#/ || $. < 2);
+    my @line = split ' ', $_;
+    # if we don't get a * then add a blank line in its' place.
+    if (scalar @line < 5) {
+      unshift @line, '';
+    }
+    push @{$c->stash->{power_file}}, \@line;
+  }
+
+  close $power_file_handle;
+
+  # show the no result message if we don't have data in the .cov file
   if (!exists $c->stash->{out_file}) {
     $c->go('no_results');
   }
@@ -154,6 +190,13 @@ sub not_found : Private {
   $c->stash->{template} = 'not_found.tt';
   return;
 }
+
+sub alignment_missing : Private {
+  my ($self, $c) = @_;
+  $c->stash->{template} = 'alignment_missing.tt';
+  return;
+};
+
 
 
 =head1 AUTHOR

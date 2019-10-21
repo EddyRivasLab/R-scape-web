@@ -2,19 +2,19 @@
   width: 100%;
 }
 
-.outresults td:first-child {
+td.noncompat {
   background: #444;
 }
 
-.outresults th {
+.outresults th, .powerresults th {
   cursor: pointer;
 }
 
-.covary td:first-child, .key span.covary {
+td.covary, .key span.covary {
   background: #d7efc5;
 }
 
-.compat td:first-child, .key span.compat {
+td.compat, .key span.compat {
   background: orange;
 }
 
@@ -48,4 +48,8 @@
   display: inline-block;
   content: "";
   margin-left: .2em;
+}
+
+.main_message p {
+  text-indent: 1em;
 }

@@ -1,29 +1,122 @@
-<h2>Results</h2>
+<h2>Results for [% IF c.stash.mode == 1 %]
+  "Evaluate region for conserved structure"
+  [% ELSIF c.stash.mode == 2 %]
+  "Predict new structure"
+  [% ELSIF c.stash.mode == 3 %]
+  "Evaluate given structure"
+  [% ELSIF c.stash.mode == 4 %]
+  "Improve given structure"
+  [% END %]
+</h2>
 <p>E-value threshold: [% evalue %]</p>
 <p class="text-muted">Click on a column header to sort.</p>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7">
+    <h3>List of covarying basepairs</h3>
     <table class="outresults table">
       <thead>
         <tr>
-          <th>Symbol</th>
-          <th class="sortable numeric" data-column="1">Left base <span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="2">Right base <span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="3">Covariation Score <span class="arrow"></span></th>
-          <th class="sortable evalue" data-column="4">E-value <span class="arrow"></span></th>
+          [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+          <th>in CaCoFold structure</th>
+          <th>in given structure</th>
+          <th class="sortable numeric" data-column="2">Left base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="3">Right base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="4">Covariation Score<span class="arrow"></span></th>
+          <th class="sortable evalue" data-column="5">E-value<span class="arrow"></span></th>
+          <th class="sortable numeric reverse" data-column="6">Substitutions<span class="arrow"></span></th>
+          <th class="sortable numeric reverse" data-column="7">Power<span class="arrow"></span></th>
+          [% ELSE %]
+          <th>in given structure</th>
+          <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="3">Covariation Score<span class="arrow"></span></th>
+          <th class="sortable evalue" data-column="4">E-value<span class="arrow"></span></th>
+          <th class="sortable numeric reverse" data-column="5">Substitutions<span class="arrow"></span></th>
+          <th class="sortable numeric reverse" data-column="6">Power<span class="arrow"></span></th>
+          [% END %]
         </tr>
       </thead>
       <tbody>
         [% FOREACH row IN c.stash.out_file %]
-        [% IF row.0 == '*' %]
-        <tr class="covary">
-        [% ELSIF row.0 == '~' %]
-        <tr class="compat">
-        [% ELSE %]
         <tr>
+          [% IF row.0 == '*' %]
+          <td class="covary">[% row.0 %]</td>
+          [% ELSIF row.0 == '~' %]
+          <td class="compat">[% row.0 %]</td>
+          [% ELSE %]
+          <td class="noncompat">[% row.0 %]</td>
+          [% END %]
+          [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+            [% IF row.1 == '*' %]
+            <td class="covary">[% row.1 %]</td>
+            [% ELSIF row.1 == '~' %]
+            <td class="compat">[% row.1 %]</td>
+            [% ELSE %]
+            <td class="noncompat">[% row.1 %]</td>
+            [% END %]
+          [% ELSE %]
+          <td>[% row.1 %]</td>
+          [% END %]
+          <td>[% row.2 %]</td>
+          <td>[% row.3 %]</td>
+          <td>[% row.4 %]</td>
+          <td>[% row.5 %]</td>
+          [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+          <td>[% row.6 %]</td>
+          <td>[% row.8 %]</td>
+          [% ELSE %]
+          <td>[% row.7 %]</td>
+          [% END %]
+        </tr>
         [% END %]
-          <td>[% row.0 %]</td>
+      </tbody>
+    </table>
+    <p> Significantly covarying pairs present in the structure are marked green.
+    Other covarying pairs are marked orange if both residues are unpaired in the
+    structure or there is no structure present. Orange covarying pairs could be
+    an indication of an under annotated structure or pseudoknots. Black covarying
+    pairs could indicate covariation supports for an alternative structure,
+    tertiary interactions, or false positives.</p>
+    <ul class="key">
+      <li><span class="covary">*</span> Base pair in the structure</li>
+      <li><span class="compat">~</span> Both residues unpaired in the structure, or no structure is present</li>
+      <li><span>&nbsp;</span> At least one residue is involved in other pairing in the structure</li>
+    </ul>
+    <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]">
+      <button class="btn btn-default">Download</button>
+    </form>
+    [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
+     <h3>[% IF c.stash.mode == 1 %]
+       Power analysis of given structure
+       [% ELSIF c.stash.mode == 2 %]
+       Power analysis of CaCoFold structure
+       [% ELSIF c.stash.mode == 3 %]
+       Power analysis of given structure
+       [% ELSIF c.stash.mode == 4 %]
+       Power analysis of CaCoFold structure
+       [% END %]
+     </h3>
+     <table class="powerresults table">
+      <thead>
+        <tr>
+          <th>Covarying pair<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="3">Substitutions<span class="arrow"></span></th>
+          <th class="sortable numeric" data-column="4">Power<span class="arrow"></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        [% FOREACH row IN c.stash.power_file %]
+        <tr>
+          [% IF row.0 == '*' %]
+          <td class="covary">[% row.0 %]</td>
+          [% ELSIF row.0 == '~' %]
+          <td class="compat">[% row.0 %]</td>
+          [% ELSE %]
+          <td class="noncompat">[% row.0 %]</td>
+          [% END %]
           <td>[% row.1 %]</td>
           <td>[% row.2 %]</td>
           <td>[% row.3 %]</td>
@@ -32,32 +125,25 @@
         [% END %]
       </tbody>
     </table>
-    <p>Significantly covarying pairs present in the given structure are
-    marked green. Other significantly covarying pairs are marked orange if
-    compatible with the given structure or black if they are not. Orange
-    covarying pairs could be an indication of an under annotated
-    structure. Black covarying pairs could indicate that the given
-    structure is wrong and covariation supports an alternative structure,
-    covarying tertiary interactions, or a false positive.
-    </p>
-    <ul class="key">
-      <li><span class="covary">*</span> A covarying base pair</li>
-      <li><span class="compat">~</span> A covarying pair compatible with the secondary structure</li>
-      <li><span>&nbsp;</span> A covarying pair not compatible with the secondary structure</li>
-    </ul>
-    <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]">
+    [% FOREACH row IN c.stash.power_meta %]
+    <p>[% row %]</p>
+    [% END %]
+    <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]/power">
       <button class="btn btn-default">Download</button>
     </form>
+    [% END %]
 
-    <h3>Distribution of Scores</h3>
-    <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-5">
+    <h3>Distribution of Scores</h3>
+    <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
+    [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
     <h3>R2R image</h3>
-    <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r.svg">
+    <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r/query.svg">
 
     <h3>Dot plot</h3>
     <img id="dplotimage" src="[% c.stash.tmp_id %]/dplot/query.svg">
+    [% END %]
   </div>
 </div>
