@@ -35,19 +35,25 @@ td.compat, .key span.compat {
   text-align: center;
 }
 
-.sorted .arrow {
-  border-top: 4px solid #000;
+.tablesorter-headerUnSorted .arrow {
+  background-image: url('/static/images/black-unsorted.gif');
+  height: 9px;
 }
+
+.tablesorter-headerAsc .arrow {
+  background-image: url('/static/images/black-asc.gif');
+  height: 4px;
+}
+
+.tablesorter-headerDesc .arrow {
+  background-image: url('/static/images/black-desc.gif');
+  height: 4px;
+}
+
 .arrow {
-  border-top: 4px solid #999;
-  border-left: 4px solid rgba(0, 0, 0, 0);
-  border-right: 4px solid rgba(0, 0, 0, 0);
-  width: 0;
-  height: 0;
-  vertical-align: baseline;
+  margin-left: 2px;
   display: inline-block;
-  content: "";
-  margin-left: .2em;
+  width: 7px;
 }
 
 .main_message p {

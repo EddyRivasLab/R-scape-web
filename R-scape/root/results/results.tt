@@ -18,22 +18,22 @@
       <thead>
         <tr>
           [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
-          <th>in CaCoFold structure</th>
-          <th>in given structure</th>
-          <th class="sortable numeric" data-column="2">Left base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="3">Right base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="4">Covariation Score<span class="arrow"></span></th>
-          <th class="sortable evalue" data-column="5">E-value<span class="arrow"></span></th>
-          <th class="sortable numeric reverse" data-column="6">Substitutions<span class="arrow"></span></th>
-          <th class="sortable numeric reverse" data-column="7">Power<span class="arrow"></span></th>
+          <th class="nosort">in CaCoFold structure</th>
+          <th class="nosort">in given structure</th>
+          <th>Left base<span class="arrow"></span></th>
+          <th>Right base<span class="arrow"></span></th>
+          <th>Covariation Score<span class="arrow"></span></th>
+          <th>E-value<span class="arrow"></span></th>
+          <th>Substitutions<span class="arrow"></span></th>
+          <th>Power<span class="arrow"></span></th>
           [% ELSE %]
-          <th>in given structure</th>
-          <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="3">Covariation Score<span class="arrow"></span></th>
-          <th class="sortable evalue" data-column="4">E-value<span class="arrow"></span></th>
-          <th class="sortable numeric reverse" data-column="5">Substitutions<span class="arrow"></span></th>
-          <th class="sortable numeric reverse" data-column="6">Power<span class="arrow"></span></th>
+          <th class="nosort">in given structure</th>
+          <th>Left base<span class="arrow"></span></th>
+          <th>Right base<span class="arrow"></span></th>
+          <th>Covariation Score<span class="arrow"></span></th>
+          <th>E-value<span class="arrow"></span></th>
+          <th>Substitutions<span class="arrow"></span></th>
+          <th>Power<span class="arrow"></span></th>
           [% END %]
         </tr>
       </thead>
@@ -100,11 +100,11 @@
      <table class="powerresults table">
       <thead>
         <tr>
-          <th>Covarying pair<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="1">Left base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="2">Right base<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="3">Substitutions<span class="arrow"></span></th>
-          <th class="sortable numeric" data-column="4">Power<span class="arrow"></span></th>
+          <th class="nosort">Covarying pair<span class="arrow"></span></th>
+          <th>Left base<span class="arrow"></span></th>
+          <th>Right base<span class="arrow"></span></th>
+          <th>Substitutions<span class="arrow"></span></th>
+          <th>Power<span class="arrow"></span></th>
         </tr>
       </thead>
       <tbody>
