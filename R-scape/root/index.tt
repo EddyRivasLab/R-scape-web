@@ -61,7 +61,7 @@
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode1" value="1" checked>
-            Evaluate regions for conserved structure
+            Evaluate region for conserved structure
           </label>
         </div>
         <div class="radio">
