@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  r-scape:
+    image: eddylab.org/rscape:1.0
+
+    # uncomment the lines below to turn on debugging and expose the main application
+    # on port 8080. You can then connect to it directly and avoid the nginx server.
+
+    environment:
+      CATALYST_DEBUG: 1
+    ports:
+        - '8080:8080'
+    volumes:
+      - ./R-scape:/app 
+
+    restart: unless-stopped

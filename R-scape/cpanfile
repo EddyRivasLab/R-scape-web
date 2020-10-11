@@ -1,1 +1,5 @@
 requires 'Sereal::Encoder', '4.007';
+requires 'CatalystX::RoleApplicator', '0.005';
+requires 'Catalyst::TraitFor::Request::ProxyBase', '0.000005';
+requires 'Moose', '2.2013';
+requires 'File::Slurp', '9999.32';
