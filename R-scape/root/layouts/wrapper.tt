@@ -7,6 +7,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>R-scape</title>
 
+    <link rel="shortcut icon" href="[% c.uri_for("/static") %]/images/rscape.ico" />
+
     <!-- Bootstrap -->
     <link href="[% c.uri_for("/static") %]/css/bootstrap.min.css" rel="stylesheet">
     <link href="[% c.uri_for("/static") %]/css/app.css" rel="stylesheet">
@@ -29,7 +31,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="[% c.uri_for("/") %]">R-scape</a>
+          <a class="navbar-brand" href="[% c.uri_for("/") %]"><img src="[% c.uri_for("/static") %]/images/rscape_logo.png" alt="R-scape logo"/></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
