@@ -1,3 +1,3 @@
 # R-scape-web
-RNA Structure-driven Covariance Above Phylogenetic Expectation (web application)
+RNA Structural Covariation Above Phylogenetic Expectation (web application)
 
