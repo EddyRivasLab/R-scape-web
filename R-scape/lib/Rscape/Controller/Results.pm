@@ -71,9 +71,9 @@ sub svg_images : Path : Args(3) {
   my @files = glob $glob_pattern;
 
   if ($mode =~ /^(2|4)$/ && $type =~ /^(dplot|r2r)$/) {
-    @files = grep(/\.fold\./, @files);
+    @files = grep(/\.cacofold\./, @files);
   } else {
-    @files = grep(!/\.fold\./, @files);
+    @files = grep(!/\.cacofold\./, @files);
   }
 
   my $contents = read_file("$results_dir/" . $files[0]);
@@ -122,10 +122,10 @@ sub read_results : Private {
   my $out_path = $dir . '/' . $name . '.cov';
   my $power_file_path = $dir . '/' . $name . '.power';
 
-  # open the .fold version of the files if modes 2|4 are selected.
+  # open the .cacofold version of the files if modes 2|4 are selected.
   if ($mode =~ /^(2|4)$/) {
-    $out_path = $dir . '/' . $name . '.fold.cov';
-    $power_file_path = $dir . '/' . $name . '.fold.power';
+    $out_path = $dir . '/' . $name . '.cacofold.cov';
+    $power_file_path = $dir . '/' . $name . '.cacofold.power';
   }
 
   # read data from the *.cov file

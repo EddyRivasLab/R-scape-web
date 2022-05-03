@@ -117,9 +117,9 @@ sub run {
 
   # modify the command that is run, based on the mode chosen.
   if ($opts->{mode} == 1)    { $cmd .= $self->rscape_dir . '/bin/R-scape           '; }
-  elsif ($opts->{mode} == 2) { $cmd .= $self->rscape_dir . '/bin/R-scape --fold    '; }
+  elsif ($opts->{mode} == 2) { $cmd .= $self->rscape_dir . '/bin/R-scape --cacofold '; }
   elsif ($opts->{mode} == 3) { $cmd .= $self->rscape_dir . '/bin/R-scape -s        '; }
-  elsif ($opts->{mode} == 4) { $cmd .= $self->rscape_dir . '/bin/R-scape -s --fold '; }
+  elsif ($opts->{mode} == 4) { $cmd .= $self->rscape_dir . '/bin/R-scape -s --cacofold '; }
 
 
   if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
