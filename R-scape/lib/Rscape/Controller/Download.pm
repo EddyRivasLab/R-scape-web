@@ -78,7 +78,13 @@ sub read_power_results: Private {
 
   # change file download, based on mode.
   if ($mode =~ /^(2|4)$/) {
-    $out_path = $dir . '/' . $name . '.fold.power';
+    $out_path = $dir . '/' . $name . '.cacofold.power';
+    # if the new cacofold file doesn't exist, look for the old
+    # fold file.
+    if(! -e $out_path) {
+      $out_path = $dir . '/' . $name . '.fold.power';
+    }
+
   }
 
   my $output_file = $out_path;
@@ -116,7 +122,12 @@ sub read_results : Private {
 
   # change file download, based on mode.
   if ($mode =~ /^(2|4)$/) {
-    $out_path = $dir . '/' . $name . '.fold.cov';
+    $out_path = $dir . '/' . $name . '.cacofold.cov';
+    # if the new cacofold file doesn't exist, look for the old
+    # fold file.
+    if(! -e $out_path) {
+      $out_path = $dir . '/' . $name . '.fold.cov';
+    }
   }
 
   my $output_file = $out_path;
