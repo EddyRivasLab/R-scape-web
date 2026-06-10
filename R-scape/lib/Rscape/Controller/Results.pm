@@ -194,6 +194,15 @@ sub read_results : Private {
 
   close $power_file_handle;
 
+  # R-scape 2.6.7 produces the dot-plot and R2R structure plots even for a
+  # mode-1 alignment with no input structure, so let the template decide whether
+  # to show them from the files R-scape actually wrote rather than has_ss_cons.
+  my $cacofold = $mode =~ /^(2|4)$/;
+  for my $plot (['has_dplot', '*.dplot.svg'], ['has_r2r', '*.R2R.sto.svg']) {
+    my @found = grep { $cacofold ? /\.cacofold\./ : !/\.cacofold\./ } glob "$dir/$plot->[1]";
+    $c->stash->{$plot->[0]} = scalar(@found) ? 1 : 0;
+  }
+
   # show the no result message if we don't have data in the .cov file
   if (!exists $c->stash->{out_file}) {
     $c->go('no_results');

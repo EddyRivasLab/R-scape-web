@@ -91,7 +91,7 @@
     <form method="post" action="[% c.uri_for( "/download") %]/[% c.stash.tmp_id %]">
       <button class="btn btn-default">Download</button>
     </form>
-    [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
+    [% IF c.stash.power_file %]
      <h3>[% IF c.stash.mode == 1 %]
        Power analysis of given structure
        [% ELSIF c.stash.mode == 2 %]
@@ -143,10 +143,12 @@
   <div class="col-md-5">
     <h3>Distribution of Scores</h3>
     <img id="hisimage" src="[% c.stash.tmp_id %]/his/query.svg">
-    [% UNLESS (!c.stash.has_ss_cons) && c.stash.mode == 1 %]
+    [% IF c.stash.has_r2r %]
     <h3>R2R image</h3>
     <img id="r2rimage" src="[% c.stash.tmp_id %]/r2r/query.svg">
+    [% END %]
 
+    [% IF c.stash.has_dplot %]
     <h3>Dot plot</h3>
     <img id="dplotimage" src="[% c.stash.tmp_id %]/dplot/query.svg">
     [% END %]
