@@ -90,6 +90,24 @@ sub svg_images : Path : Args(3) {
   my $contents = read_file("$results_dir/" . $files[0]);
   chdir $orig_dir;
 
+  # R-scape draws its gnuplot figures in layers, and gnuplot's SVG terminal
+  # writes each layer as a separate stacked SVG document in the one file (e.g.
+  # 6 for the survival plot, 3 for the dot plot). Browsers only render the first
+  # document, so merge the layers back under a single <svg> root — the overlay
+  # the SVG terminal is meant to produce. Single-document SVGs (the R2R plot)
+  # have just one <svg> and are served unchanged.
+  if ((() = $contents =~ /<svg\b/g) > 1) {
+    my @docs = grep { /\S/ } split /(?=<\?xml)/, $contents;
+    my ($svg_open) = $docs[0] =~ /(<svg\b.*?>)/s;
+    my @layers;
+    for my $doc (@docs) {
+      my ($inner) = $doc =~ /<svg\b[^>]*>(.*)<\/svg>/s;
+      push @layers, $inner if defined $inner;
+    }
+    $contents = qq{<?xml version="1.0" encoding="utf-8" standalone="no"?>\n}
+              . $svg_open . join("\n", @layers) . "</svg>\n";
+  }
+
   $c->res->content_type('image/svg+xml');
   $c->res->body($contents);
   return;

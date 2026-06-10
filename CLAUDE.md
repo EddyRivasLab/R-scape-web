@@ -83,7 +83,12 @@ Standard Catalyst MVC. Components live under `R-scape/lib/Rscape/`.
    - `GET /results/<id>` (`results`) reads output files back from the tempdir and
      stashes them for the template.
    - `GET /results/<id>/<type>/...svg` (`svg_images`) streams the right SVG
-     (`his`/`dplot`/`r2r`) by globbing the output dir.
+     (`his`/`dplot`/`r2r`) by globbing the output dir. R-scape draws its gnuplot
+     figures in layers, and gnuplot's SVG terminal writes each layer as a
+     *separate* stacked SVG document in one file (e.g. 6 for `surv`/his, 3 for
+     `dplot`). Browsers only render the first, so `svg_images` merges the layers
+     back under a single `<svg>` root before serving. The R2R plot is a single
+     document (from R2R, not gnuplot) and passes through unchanged.
 
 `lib/Rscape/Controller/Download.pm` serves the `.cov` and `.power` files as plaintext
 attachments. `lib/Rscape/Controller/Root.pm` is the `/` landing page and 404 handler.
@@ -152,3 +157,11 @@ reverse proxy (nginx) in production and rewrites generated URLs accordingly.
   that protection when modifying `run()`.
 - This is an old codebase (Bootstrap 3, jQuery 1.12, Catalyst). Match the surrounding
   style; don't introduce modern build tooling.
+- **The image base is `ubuntu:18.04`** (the Catalyst stack is installed from apt;
+  only `CatalystX::RoleApplicator` and `Catalyst::TraitFor::Request::ProxyBase` come
+  from CPAN). gnuplot must be **5.2+** — 5.0's SVG terminal emitted invalid XML
+  (unbalanced `<g>`), so don't downgrade the base. On Apple Silicon the build runs
+  natively for arm64; the bundled R-scape `config.sub`/`config.guess` are too old to
+  recognize aarch64, so the Dockerfile refreshes them from `autotools-dev`.
+- The `rscape.tar.gz` is packaged from a macOS tree and ships stale Mach-O `.o`/`.a`
+  files; the Dockerfile deletes them before `make` so they're rebuilt for Linux.

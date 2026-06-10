@@ -9,6 +9,6 @@ name R-scape
 <Model Rscape>
   dir_path    /tmp/rscape
   rscape_dir  /build/rscape_v2.6.7
-  gnuplot     /usr/local/bin/gnuplot
-  gnuplot_ps  /usr/local/share/gnuplot/gnuplot/5.0/PostScript
+  gnuplot     /usr/bin/gnuplot
+  gnuplot_ps  /usr/share/gnuplot/gnuplot/5.2/PostScript
 </Model>
