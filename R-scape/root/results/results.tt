@@ -24,6 +24,7 @@
           <th>Right base<span class="arrow"></span></th>
           <th>Covariation Score<span class="arrow"></span></th>
           <th>E-value<span class="arrow"></span></th>
+          <th>P-value<span class="arrow"></span></th>
           <th>Substitutions<span class="arrow"></span></th>
           <th>Power<span class="arrow"></span></th>
           [% ELSE %]
@@ -32,6 +33,7 @@
           <th>Right base<span class="arrow"></span></th>
           <th>Covariation Score<span class="arrow"></span></th>
           <th>E-value<span class="arrow"></span></th>
+          <th>P-value<span class="arrow"></span></th>
           <th>Substitutions<span class="arrow"></span></th>
           <th>Power<span class="arrow"></span></th>
           [% END %]
@@ -61,12 +63,15 @@
           <td>[% row.2 %]</td>
           <td>[% row.3 %]</td>
           <td>[% row.4 %]</td>
-          <td>[% row.5 %]</td>
           [% IF c.stash.mode == 2 OR c.stash.mode == 4 %]
+          <td>[% row.5 %]</td>
+          <td>[% row.6 %]</td>
+          <td>[% row.7 %]</td>
+          <td>[% row.9 %]</td>
+          [% ELSE %]
+          <td>[% row.5 %]</td>
           <td>[% row.6 %]</td>
           <td>[% row.8 %]</td>
-          [% ELSE %]
-          <td>[% row.7 %]</td>
           [% END %]
         </tr>
         [% END %]
