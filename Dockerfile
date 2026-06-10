@@ -1,7 +1,11 @@
 FROM neomorphic/catalyst
 MAINTAINER Jody Clements clementsj@janelia.hhmi.org
 
-RUN apt-get update && apt-get install -y gnuplot
+# Debian 9 "stretch" (this image's base) is EOL, so its packages have moved
+# off the live mirrors to archive.debian.org. Repoint apt there before installing.
+RUN printf 'deb http://archive.debian.org/debian stretch main\ndeb http://archive.debian.org/debian-security stretch/updates main\n' > /etc/apt/sources.list \
+    && apt-get -o Acquire::Check-Valid-Until=false update \
+    && apt-get install -y --allow-unauthenticated gnuplot
 
 WORKDIR /build
 
