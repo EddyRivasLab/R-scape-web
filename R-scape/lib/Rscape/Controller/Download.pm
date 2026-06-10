@@ -30,6 +30,13 @@ sub index :Path :Args(0) {
 
 sub tabed_results :Path :Args(1) {
   my ( $self, $c, $dir ) = @_;
+
+  # result ids are the random tempdir basenames generated in the model
+  # (9 word chars). reject anything else so '../' can't escape dir_path.
+  if ($dir !~ /\A\w{9}\z/) {
+    $c->go('not_found');
+  }
+
   my $results_dir = $c->config->{'Model::Rscape'}->{dir_path} . '/' . $dir;
 
   if (!-e $results_dir) {
@@ -46,6 +53,13 @@ sub tabed_results :Path :Args(1) {
 
 sub alt_tabed_results :Path :Args(2) {
   my ( $self, $c, $dir, $type ) = @_;
+
+  # result ids are the random tempdir basenames generated in the model
+  # (9 word chars). reject anything else so '../' can't escape dir_path.
+  if ($dir !~ /\A\w{9}\z/) {
+    $c->go('not_found');
+  }
+
   my $results_dir = $c->config->{'Model::Rscape'}->{dir_path} . '/' . $dir;
 
   if (!-e $results_dir) {

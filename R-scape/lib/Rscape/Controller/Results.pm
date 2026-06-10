@@ -33,7 +33,11 @@ sub index :Path :Args(0) {
 sub results : Path : Args(1) {
   my ( $self, $c, $dir ) = @_;
 
-  # validate dir here.
+  # result ids are the random tempdir basenames generated in the model
+  # (9 word chars). reject anything else so '../' can't escape dir_path.
+  if ($dir !~ /\A\w{9}\z/) {
+    $c->go('not_found');
+  }
 
   $c->stash->{tmp_id} = $dir;
   my $results_dir = $c->config->{'Model::Rscape'}->{dir_path} . '/' . $dir;
@@ -49,6 +53,13 @@ sub results : Path : Args(1) {
 
 sub svg_images : Path : Args(3) {
   my ($self, $c, $dir, $type) = @_;
+
+  # reject ids that aren't the random tempdir basenames we generate, so
+  # '../' sequences can't escape dir_path when building the file paths below.
+  if ($dir !~ /\A\w{9}\z/) {
+    $c->go('not_found');
+  }
+
   my $results_dir = $c->config->{'Model::Rscape'}->{dir_path} . '/' . $dir;
 
   # figure out the search mode to return the correct images.

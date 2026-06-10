@@ -122,7 +122,10 @@ sub run {
   elsif ($opts->{mode} == 4) { $cmd .= $self->rscape_dir . '/bin/R-scape -s --cacofold '; }
 
 
-  if ($opts->{evalue} && $opts->{evalue} =~ /[0-9\.]*/) {
+  # only append the e-value if it is a well-formed number (optionally in
+  # scientific notation). the pattern is fully anchored so that user input
+  # can't inject extra shell tokens into the command run via system() below.
+  if (defined $opts->{evalue} && $opts->{evalue} =~ /\A\d+(?:\.\d+)?(?:[eE][-+]?\d+)?\z/) {
     $cmd .= ' -E ' . $opts->{evalue};
   }
 
