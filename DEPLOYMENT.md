@@ -5,23 +5,30 @@ and runs Starman on `127.0.0.1:3000` behind the existing Apache reverse proxy
 (`/R-scape/` → `http://localhost:3000/`). You only need `docker-compose.prod.yml`
 from this repo — no source checkout or build on the server.
 
-## 1. Install a container engine (Ubuntu)
+The production host runs **Ubuntu 18.04**, so Docker is installed from Docker's
+official apt repo (the version in Ubuntu's own repo is too old).
 
-**Option A — Podman:**
+## 1. Install Docker + compose (Ubuntu 18.04)
+
 ```bash
 sudo apt-get update
-sudo apt-get install -y podman podman-compose
-```
+sudo apt-get install -y ca-certificates curl gnupg
 
-**Option B — Docker:**
-```bash
+# Docker's official GPG key + repo for bionic
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list
+
 sudo apt-get update
-sudo apt-get install -y docker.io docker-compose-v2
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo systemctl enable --now docker
 ```
 
-The commands below use `podman`; for Docker, substitute `docker` (e.g.
-`docker compose`).
+This gives Docker 24.x and the `docker compose` (v2) command. (Optional: add your
+user to the `docker` group with `sudo usermod -aG docker $USER` and re-login to
+drop the `sudo` prefix below.)
 
 ## 2. Get the compose file
 
@@ -35,7 +42,7 @@ sudo mkdir -p /opt/rscape && cd /opt/rscape
 If the ghcr.io package is still **private**, log in once first (needs a GitHub
 token with `read:packages`):
 ```bash
-podman login ghcr.io -u <github-user>
+sudo docker login ghcr.io -u <github-user>
 ```
 If it has been made public, no login is needed.
 
@@ -54,16 +61,16 @@ sudo ss -tlnp | grep ':3000' || echo "port 3000 free"
 
 ```bash
 cd /opt/rscape
-podman compose -f docker-compose.prod.yml up -d
+sudo docker compose -f docker-compose.prod.yml up -d
 ```
-This pulls the right architecture (amd64 on a normal server), starts Starman on
-`127.0.0.1:3000`, and restarts automatically unless stopped. Apache already
-proxies `/R-scape/` to that port, so **no Apache change is needed**.
+This pulls the right architecture (amd64), starts Starman on `127.0.0.1:3000`, and
+restarts automatically unless stopped. Apache already proxies `/R-scape/` to that
+port, so **no Apache change is needed**.
 
 ## 5. Verify
 
 ```bash
-podman ps                                              # container is Up
+sudo docker ps                                              # container is Up
 curl -sf -o /dev/null -w '%{http_code}\n' localhost:3000/   # expect 200
 ```
 Then load the public URL (e.g. `http://eddylab.org/R-scape/`) and run a test
@@ -73,17 +80,16 @@ alignment.
 
 If something is wrong, revert to the old service:
 ```bash
-cd /opt/rscape && podman compose -f docker-compose.prod.yml down
+cd /opt/rscape && sudo docker compose -f docker-compose.prod.yml down
 sudo systemctl enable --now starman-rscape
 ```
 
 ## Notes
 
-- **Start on boot:** the container uses `restart: unless-stopped`. With Docker the
-  daemon handles this. With rootless Podman, also run
-  `podman generate systemd --new --files --name r-scape-web` and enable the unit
-  (or `systemctl --user enable podman-restart`).
+- **Start on boot:** handled by the Docker daemon (`systemctl enable docker`) plus
+  the compose file's `restart: unless-stopped`.
 - **Upgrades:** push a new image tag (`...r-scape-web:2.6.9`), bump the `image:`
-  line in `docker-compose.prod.yml`, then `podman compose -f docker-compose.prod.yml up -d`.
+  line in `docker-compose.prod.yml`, then
+  `sudo docker compose -f docker-compose.prod.yml pull && sudo docker compose -f docker-compose.prod.yml up -d`.
 - **Disk:** result directories accumulate in `./rscape-data`; prune old ones
   periodically.
