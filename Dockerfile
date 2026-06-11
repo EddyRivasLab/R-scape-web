@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
       build-essential autoconf automake libtool autotools-dev \
       gnuplot-nox gnuplot-data \
-      perl cpanminus \
+      perl cpanminus starman \
       libcatalyst-perl libcatalyst-modules-perl \
       libcatalyst-plugin-configloader-perl libcatalyst-plugin-static-simple-perl \
       libcatalyst-action-renderview-perl libcatalyst-view-tt-perl \

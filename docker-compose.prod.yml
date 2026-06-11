@@ -1,0 +1,32 @@
+# Production compose: runs the app under Starman (PSGI) on localhost:3000,
+# mirroring how the live site runs behind an Apache/nginx reverse proxy.
+# Unlike docker-compose.yml (dev), this does NOT mount ./R-scape — the code is
+# baked into the image — and it runs Starman instead of the Catalyst dev server.
+#
+#   podman compose -f docker-compose.prod.yml up -d
+#
+# Put a reverse proxy in front of 127.0.0.1:3000 (the live server uses Apache
+# with ProxyPass http://localhost:3000/ and an X-Request-Base header).
+version: '3'
+
+services:
+  r-scape:
+    image: eddylab.org/rscape:2.6.8
+
+    # Foreground Starman (no --daemonize: the container's main process must stay
+    # in the foreground). rscape.psgi is resolved from the image WORKDIR /app.
+    command: starman --listen :3000 --workers 5 rscape.psgi
+
+    # Bind to localhost only — the app is meant to sit behind a reverse proxy,
+    # not be exposed directly.
+    ports:
+      - '127.0.0.1:3000:3000'
+
+    volumes:
+      # In-container R-scape/gnuplot paths (shared with dev; the image ships no
+      # working rscape.conf because R-scape/rscape.conf is a symlink).
+      - ./rscape.conf.dev:/app/rscape.conf
+      # Persist generated result dirs (dir_path = /tmp/rscape) across restarts.
+      - ./rscape-data:/tmp/rscape
+
+    restart: unless-stopped
