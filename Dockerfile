@@ -33,7 +33,7 @@ WORKDIR /build
 COPY ./rscape.tar.gz .
 RUN tar -zxvf rscape.tar.gz
 
-WORKDIR /build/rscape_v2.6.7
+WORKDIR /build/rscape_v2.6.8
 # The tarball was packaged on macOS and ships stale Mach-O *.o/*.a build
 # artifacts. The Linux linker can't read them ("file format not recognized"),
 # so strip them and let make recompile everything from source for this platform.

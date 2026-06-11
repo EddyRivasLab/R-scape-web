@@ -1,11 +1,11 @@
 <h2>Results for [% IF c.stash.mode == 1 %]
   "Evaluate region for conserved structure"
   [% ELSIF c.stash.mode == 2 %]
-  "Predict new structure"
+  "Predict new structure with CaCoFold"
   [% ELSIF c.stash.mode == 3 %]
   "Evaluate given structure"
   [% ELSIF c.stash.mode == 4 %]
-  "Improve given structure"
+  "Improve given structure with CaCoFold"
   [% END %]
 </h2>
 <p>E-value threshold: [% evalue %]</p>

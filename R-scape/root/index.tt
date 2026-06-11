@@ -67,7 +67,7 @@
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode2" value="2">
-            Predict new structure
+            Predict new structure with CaCoFold
           </label>
         </div>
         <div class="radio">
@@ -79,7 +79,7 @@
         <div class="radio">
           <label>
             <input type="radio" name="mode" id="mode4" value="4">
-            Improve given structure
+            Improve given structure with CaCoFold
           </label>
         </div>
       </div>
@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class="panel panel-default mode-desc" id="mode-desc2">
-        <div class="panel-heading">Predict new structure</div>
+        <div class="panel-heading">Predict new structure with CaCoFold</div>
         <div class="panel-body">
           <p>All possible pairs are analyzed equally in one single test. A structure is
           predicted and visualized with the significant covarying pairs highlighted in
@@ -124,7 +124,7 @@
         </div>
       </div>
       <div class="panel panel-default mode-desc" id="mode-desc4">
-        <div class="panel-heading">Improve given structure</div>
+        <div class="panel-heading">Improve given structure with CaCoFold</div>
         <div class="panel-body">
           <p>Requires that your Stockholm file has a proposed consensus structure annotation.
           Two independent covariation tests are performed, one on the set of proposed base pairs,
@@ -174,6 +174,12 @@
 	 </a>
          E Rivas. 
          <i>PLOS Computational Biology</i> 16:e100838, 2020.
+     </p>
+
+     <p>
+         All-at-once RNA folding with 3D motif prediction framed by evolutionary information.
+         A Karan and E Rivas.
+         <i>Nature Methods</i> 22:2094-2106, 2025.
      </p>
 	 
 
