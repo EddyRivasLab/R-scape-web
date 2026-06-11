@@ -145,7 +145,7 @@
 <div class="row shorts">
   <div class="col-sm-4">
     <h3> Download </h3>
-    <p>  Current source code distribution: <a href="http://eddylab.org/software/rscape/rscape.tar.gz">rscape.tar.gz</a>
+    <p>  Current source code distribution: <a href="https://github.com/EddyRivasLab/R-scape/releases/latest">latest release on GitHub</a>
   </div>
 
   <div class="col-sm-4">
