@@ -16,8 +16,8 @@ container at build time — it is *not* part of this repo's source.
 ## Repository layout
 
 - `R-scape/` — the actual Catalyst application (this is the app root; most work happens here).
-- `Dockerfile` / `docker-compose.yml` — build and run the app in a container.
-- `rscape.conf.dev` — config mounted over the app's `rscape.conf` during local dev.
+- `Dockerfile` / `docker-compose.yml` (dev) / `docker-compose.prod.yml` (Starman) — build and run the app in a container.
+- `rscape.conf` — config (with the in-container R-scape/gnuplot paths) mounted over `/app/rscape.conf` by both compose files.
 - `rscape.tar.gz` — the R-scape C source tarball, compiled at image build time.
 - `assets/` — logo source files (not served).
 
@@ -32,7 +32,7 @@ The app is designed to run only inside the container (it shells out to the compi
 # Build the image (compiles R-scape from rscape.tar.gz; slow).
 podman build -t eddylab.org/rscape:2.6.8 .
 
-# Run via compose. Mounts ./R-scape into /app and rscape.conf.dev over the config,
+# Run via compose. Mounts ./R-scape into /app and rscape.conf over the config,
 # so code/template edits are live without rebuilding. Exposes port 8080.
 podman-compose up
 ```
@@ -141,8 +141,9 @@ Catalyst loads `rscape.conf` (Config::General format) from the app home dir via
 - `gnuplot` / `gnuplot_ps` — gnuplot binary and PostScript dir, exported as env vars
   before running R-scape.
 
-There are several variants: `rscape.conf.dev` (mounted in dev), `rscape.conf.live`
-(production paths), `rscape.conf.test`. The `using_frontend_proxy` /
+The repo-root `rscape.conf` holds the in-container paths and is mounted by both
+compose files; `R-scape/rscape.conf.live` / `rscape.conf.test` are legacy configs
+for the non-containerized deployment. The `using_frontend_proxy` /
 `ProxyBase` request trait in `lib/Rscape.pm` means the app expects to sit behind a
 reverse proxy (nginx) in production and rewrites generated URLs accordingly.
 
@@ -151,7 +152,7 @@ reverse proxy (nginx) in production and rewrites generated URLs accordingly.
 - **Version bumps**: the R-scape version (`2.6.8`) is hard-coded in three spots that
   must stay in sync — the image tag in `docker-compose.yml`, and the
   `rscape_v2.6.8` directory name in both the `Dockerfile` (`WORKDIR`) and
-  `rscape.conf.dev` (`rscape_dir`). The C source dir name comes from `rscape.tar.gz`.
+  `rscape.conf` (`rscape_dir`). The C source dir name comes from `rscape.tar.gz`.
 - The model builds a shell command string and runs it with `system()`. Uploads are
   saved under a server-controlled filename specifically to avoid path injection — keep
   that protection when modifying `run()`.

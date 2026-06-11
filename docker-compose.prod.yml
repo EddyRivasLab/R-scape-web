@@ -23,9 +23,9 @@ services:
       - '127.0.0.1:3000:3000'
 
     volumes:
-      # In-container R-scape/gnuplot paths (shared with dev; the image ships no
-      # working rscape.conf because R-scape/rscape.conf is a symlink).
-      - ./rscape.conf.dev:/app/rscape.conf
+      # In-container R-scape/gnuplot paths. The image ships no working
+      # rscape.conf (R-scape/rscape.conf is a symlink), so it's mounted here.
+      - ./rscape.conf:/app/rscape.conf
       # Persist generated result dirs (dir_path = /tmp/rscape) across restarts.
       - ./rscape-data:/tmp/rscape
 

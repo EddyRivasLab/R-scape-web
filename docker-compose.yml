@@ -13,9 +13,9 @@ services:
         - '8080:8080'
     volumes:
       - ./R-scape:/app
-      - ./rscape.conf.dev:/app/rscape.conf
+      - ./rscape.conf:/app/rscape.conf
       # persist the generated result dirs (dir_path = /tmp/rscape in
-      # rscape.conf.dev) to the host so they survive restarts and rebuilds.
+      # rscape.conf) to the host so they survive restarts and rebuilds.
       - ./rscape-data:/tmp/rscape
 
     restart: unless-stopped
