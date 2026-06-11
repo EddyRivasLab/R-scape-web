@@ -11,7 +11,7 @@ version: '3'
 
 services:
   r-scape:
-    image: eddylab.org/rscape:2.6.8
+    image: ghcr.io/eddyrivaslab/r-scape-web:2.6.8
 
     # Foreground Starman (no --daemonize: the container's main process must stay
     # in the foreground). rscape.psgi is resolved from the image WORKDIR /app.
