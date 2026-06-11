@@ -51,6 +51,13 @@ WORKDIR /app
 
 COPY ./R-scape/ .
 
+# Bake in a working config. R-scape/rscape.conf is a symlink to the legacy
+# non-container paths, so the COPY above leaves no usable /app/rscape.conf;
+# this overlays the in-container paths so the image runs standalone (e.g. the
+# prod compose needs no config mount). The dev compose still mounts ./R-scape
+# over /app, which shadows this, so it mounts rscape.conf itself.
+COPY ./rscape.conf /app/rscape.conf
+
 EXPOSE 8080
 
 CMD perl ./script/rscape_server.pl -d -r -p 8080

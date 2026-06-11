@@ -17,7 +17,7 @@ container at build time — it is *not* part of this repo's source.
 
 - `R-scape/` — the actual Catalyst application (this is the app root; most work happens here).
 - `Dockerfile` / `docker-compose.yml` (dev) / `docker-compose.prod.yml` (Starman) — build and run the app in a container.
-- `rscape.conf` — config (with the in-container R-scape/gnuplot paths) mounted over `/app/rscape.conf` by both compose files.
+- `rscape.conf` — the in-container config (R-scape/gnuplot paths). Baked into the image by the Dockerfile, and also mounted by the dev compose (whose `./R-scape` mount would otherwise shadow it).
 - `rscape.tar.gz` — the R-scape C source tarball, compiled at image build time.
 - `assets/` — logo source files (not served).
 
@@ -141,9 +141,11 @@ Catalyst loads `rscape.conf` (Config::General format) from the app home dir via
 - `gnuplot` / `gnuplot_ps` — gnuplot binary and PostScript dir, exported as env vars
   before running R-scape.
 
-The repo-root `rscape.conf` holds the in-container paths and is mounted by both
-compose files; `R-scape/rscape.conf.live` / `rscape.conf.test` are legacy configs
-for the non-containerized deployment. The `using_frontend_proxy` /
+The repo-root `rscape.conf` holds the in-container paths. It's baked into the
+image (Dockerfile `COPY`) so prod runs standalone; the dev compose also mounts it
+because its `./R-scape:/app` mount would otherwise shadow the baked copy with the
+legacy `R-scape/rscape.conf` symlink. `R-scape/rscape.conf.live` / `rscape.conf.test`
+are legacy configs for the non-containerized deployment. The `using_frontend_proxy` /
 `ProxyBase` request trait in `lib/Rscape.pm` means the app expects to sit behind a
 reverse proxy (nginx) in production and rewrites generated URLs accordingly.
 
