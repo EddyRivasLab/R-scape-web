@@ -1,6 +1,6 @@
 services:
   r-scape:
-    image: rscape:2.6.20
+    image: localhost/rscape:2.6.20
 
     command: starman --listen :3000 --workers 5 rscape.psgi
     ports:
