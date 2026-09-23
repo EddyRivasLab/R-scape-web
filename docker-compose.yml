@@ -1,21 +1,13 @@
-version: '3'
-
 services:
   r-scape:
-    image: eddylab.org/rscape:2.6.8
-
-    # uncomment the lines below to turn on debugging and expose the main application
-    # on port 8080. You can then connect to it directly and avoid the nginx server.
+    image: localhost/rscape:2.6.20
 
     environment:
       CATALYST_DEBUG: 1
     ports:
-        - '8080:8080'
+      - '8080:8080'
     volumes:
       - ./R-scape:/app
-      - ./rscape.conf:/app/rscape.conf
-      # persist the generated result dirs (dir_path = /tmp/rscape in
-      # rscape.conf) to the host so they survive restarts and rebuilds.
       - ./rscape-data:/tmp/rscape
 
     restart: unless-stopped

@@ -30,7 +30,7 @@
       observed covariations using the CaCoFold algorithm.</p>
 
       <p>To see an <b>example</b>, you can download the Rfam seed alignment for the
-      <a href="http://rfam.xfam.org/family/RF00167/alignment?acc=RF00167&format=stockholm&download=1">
+      <a href="https://rfam.org/family/RF00167/alignment/pfam?download=1">
     purine riboswitch (RF00167)</a> - or any other Rfam RNA alignment - and upload
       that file to R-scape.</p>
 
